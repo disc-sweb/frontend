@@ -13,6 +13,7 @@ import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
 import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
+import Classes from 'pages/classes/Classes';
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 
@@ -37,6 +38,7 @@ export default function App() {
             </Route>
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
+            <Route path='classes' element={<Classes />} />
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>

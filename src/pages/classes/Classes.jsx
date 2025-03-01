@@ -15,6 +15,27 @@ const ClassesStyling = styled.div`
   }
 `;
 
+const SampleClassData = [
+    {
+        class_title: 'Class 1',
+        class_duration: '1 hour',
+        class_price: 10.00,
+        class_description: 'This is class 1'
+    },
+    {
+        class_title: 'Class 2',
+        class_duration: '2 hours',
+        class_price: 20.00,
+        class_description: 'This is class 2'
+    },
+    {
+        class_title: 'Class 3',
+        class_duration: '3 hours',
+        class_price: 30.00,
+        class_description: 'This is class 3'
+    },
+]
+
 const Classes = () => {
   return (
     <ClassesStyling>

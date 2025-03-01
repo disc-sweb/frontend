@@ -11,7 +11,7 @@ const ClassCard = ({ class_title, class_duration, class_price, class_description
   return (
     <StyledComponent>
       <div>
-        <img />
+        <img className='card-image' />
         <p className='card-title'>{class_title}</p>
         <p className='card-duration'>{class_duration}</p>
         <p className='card-price'>{class_price}</p>

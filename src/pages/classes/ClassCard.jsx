@@ -9,7 +9,7 @@ const StyledComponent = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-width: 100%;
   transition: transform 0.3s, box-shadow 0.3s;
   
   &:hover {
@@ -92,7 +92,7 @@ const ClassCard = ({
         <p className='card-duration'>{class_duration}</p>
         <p className='card-price'>{class_price.toFixed(2)}</p>
         <p className='card-description'>{class_description}</p>
-        <button className="card-button">Register for course</button>
+        <button className="card-button">Go To Course</button>
       </div>
     </StyledComponent>
   );

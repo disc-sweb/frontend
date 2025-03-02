@@ -6,6 +6,7 @@ import {
   PrivateRoute,
   PublicOnlyRoute,
 } from 'common/components/routes/ProtectedRoutes';
+import SectionComponent from 'common/components/section/SectionComponent';
 import { UserProvider } from 'common/contexts/UserContext';
 import NavLayout from 'common/layouts/NavLayout';
 import AuthCallback from 'pages/account/AuthCallback';
@@ -40,6 +41,7 @@ export default function App() {
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>
+        <SectionComponent />
       </BrowserRouter>
     </UserProvider>
   );

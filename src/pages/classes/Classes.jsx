@@ -1,11 +1,12 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ClassCard from './ClassCard';
 
 const ClassesStyling = styled.div`
   h1 {
     text-align: center;
+    color: #007575;
   }
 
   .courses-countainer {
@@ -13,6 +14,9 @@ const ClassesStyling = styled.div`
     flex-wrap: wrap;
     flex-direction: row;   
   }
+    padding: 50px 100px 0px 100px;
+    height: 100%;
+    background-color:#FBE9FD;
 `;
 
 const SampleClassData = [
@@ -40,7 +44,17 @@ const Classes = () => {
   return (
     <ClassesStyling>
       <h1>Classes</h1>
-      <div className='courses-countainer'></div>
+      <div className='courses-countainer'>
+        {SampleClassData.map((classData, index) => (
+          <ClassCard
+            key={index}
+            class_title={classData.class_title}
+            class_duration={classData.class_duration}
+            class_price={classData.class_price}
+            class_description={classData.class_description}
+          />
+        ))}
+      </div>
     </ClassesStyling>
   );
 };

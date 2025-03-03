@@ -1,24 +1,22 @@
 import React from 'react';
 
-// Section component
-const Section = ({
+import PropTypes from 'prop-types';
+
+import './SectionComponent.css';
+
+const SectionComponent = ({
   sectionTitle,
   sectionDescript,
   sectionGap,
   sectionPaddingBot,
   backgroundColor = 'transparent',
-  borderRadius = 0,
-  moreButton = false,
   body,
 }) => {
   // Normalize any smart apostrophes to standard ones
-  const normalizedDescript = sectionDescript.replace(/['']/g, "'");
+  // const normalizedDescript = sectionDescript.replace(/['']/g, "'");
 
   return (
-    <div
-      className='page-section-cont'
-      style={{ backgroundColor: `${backgroundColor}` }}
-    >
+    <div className='page-section-cont' style={{ backgroundColor }}>
       <div
         className='page-section'
         style={{
@@ -27,25 +25,26 @@ const Section = ({
         }}
       >
         <div className='section-header'>
-          <span className='section-title'>{sectionTitle}</span>
+          <div className='section-title'>{sectionTitle}</div>
           {/* Changed from span to div and using normalized text */}
-          <div className='section-descript'>{normalizedDescript}</div>
+          <div className='section-descript'>{sectionDescript}</div>
         </div>
         {body}
-        {moreButton && (
-          <div className='more-btn-cont'>
-            <Button
-              colorClass='light-button'
-              padding='1rem 3rem'
-              fontSize='1.125rem'
-              text='MORE'
-              hasIcon={true}
-            />
-          </div>
-        )}
       </div>
     </div>
   );
 };
 
-export { Section };
+// prop validation via proptypes
+SectionComponent.propTypes = {
+  sectionTitle: PropTypes.string.isRequired,
+  sectionDescript: PropTypes.string.isRequired,
+  sectionGap: PropTypes.number.isRequired,
+  sectionPaddingBot: PropTypes.number.isRequired,
+  backgroundColor: PropTypes.string,
+  borderRadius: PropTypes.number,
+  moreButton: PropTypes.bool,
+  body: PropTypes.node,
+};
+
+export { SectionComponent };

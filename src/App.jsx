@@ -6,7 +6,7 @@ import {
   PrivateRoute,
   PublicOnlyRoute,
 } from 'common/components/routes/ProtectedRoutes';
-import SectionComponent from 'common/components/section/SectionComponent';
+import { SectionComponent } from 'common/components/section/SectionComponent';
 import { UserProvider } from 'common/contexts/UserContext';
 import NavLayout from 'common/layouts/NavLayout';
 import AuthCallback from 'pages/account/AuthCallback';
@@ -41,7 +41,15 @@ export default function App() {
             <Route path='*' element={<NotFound />} />
           </Route>
         </Routes>
-        <SectionComponent />
+        <SectionComponent
+          sectionTitle='Why NetLogo?'
+          sectionDescript='NetLogo is a multi-agent programmable modeling environment.'
+          sectionGap={80}
+          sectionPaddingBot={3}
+          backgroundColor='#FBE9FD'
+          moreButton={true}
+          body={<p> sample content </p>}
+        />
       </BrowserRouter>
     </UserProvider>
   );

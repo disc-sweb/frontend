@@ -13,9 +13,9 @@
 }
 
 /* font family Poppins for the website description text */
-@import url(https://fonts.googleapis.com/css?family=Poppins);
-* {
+@font-face {
   font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
 }
 
 /* font family Noto Sans for the website header text */

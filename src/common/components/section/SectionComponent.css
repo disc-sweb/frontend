@@ -7,7 +7,7 @@
 }
 
 .page-section {
-  text-align: center; /* Ensures inner text is centered */
+  text-align: center;
 }
 
 .section-header {
@@ -22,7 +22,11 @@
 }
 
 .section-descript {
+  padding-top: 72pt;
   text-align: left;
   font-size: 16pt;
+}
+
+.body {
   padding-top: 72pt;
 }

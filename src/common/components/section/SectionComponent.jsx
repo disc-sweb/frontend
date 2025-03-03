@@ -10,6 +10,7 @@ const SectionComponent = ({
   sectionGap,
   sectionPaddingBot,
   backgroundColor = 'transparent',
+  titleColor,
   body,
 }) => {
   // Normalize any smart apostrophes to standard ones
@@ -20,16 +21,21 @@ const SectionComponent = ({
       <div
         className='page-section'
         style={{
-          gap: `${sectionGap}rem`,
-          paddingBottom: `${sectionPaddingBot}rem`,
+          gap: `${sectionGap}pt`,
+          paddingBottom: `${sectionPaddingBot}pt`,
         }}
       >
         <div className='section-header'>
-          <div className='section-title'>{sectionTitle}</div>
-          {/* Changed from span to div and using normalized text */}
-          <div className='section-descript'>{sectionDescript}</div>
+          <div className='section-title' style={{ color: titleColor }}>
+            {sectionTitle}
+          </div>
+          <div className='section-descript'>
+            {sectionDescript.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
         </div>
-        {body}
+        <div className='body'>{body}</div>
       </div>
     </div>
   );
@@ -38,13 +44,14 @@ const SectionComponent = ({
 // prop validation via proptypes
 SectionComponent.propTypes = {
   sectionTitle: PropTypes.string.isRequired,
-  sectionDescript: PropTypes.string.isRequired,
+  sectionDescript: PropTypes.arrayOf(PropTypes.string),
   sectionGap: PropTypes.number.isRequired,
   sectionPaddingBot: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string,
   borderRadius: PropTypes.number,
   moreButton: PropTypes.bool,
-  body: PropTypes.node,
+  titleColor: PropTypes.string,
+  body: PropTypes.any,
 };
 
 export { SectionComponent };

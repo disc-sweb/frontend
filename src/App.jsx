@@ -13,7 +13,6 @@ import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
 import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
-import Courses from 'pages/courses/Courses';
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 
@@ -31,7 +30,6 @@ export default function App() {
             <Route element={<PublicOnlyRoute />}>
               <Route path='login' element={<Login />} />
               <Route path='signup' element={<SignUp />} />
-              <Route path='courses' element={<Courses />} />
               <Route
                 path='forgot-password'
                 element={<RequestPasswordReset />}

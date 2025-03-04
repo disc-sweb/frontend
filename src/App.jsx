@@ -8,6 +8,7 @@ import {
 } from 'common/components/routes/ProtectedRoutes';
 import { UserProvider } from 'common/contexts/UserContext';
 import NavLayout from 'common/layouts/NavLayout';
+import TestPage from 'pages/TestPage';
 import AuthCallback from 'pages/account/AuthCallback';
 import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
@@ -38,6 +39,7 @@ export default function App() {
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='test' element={<TestPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

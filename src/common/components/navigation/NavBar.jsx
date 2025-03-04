@@ -55,10 +55,14 @@ export default function NavBar() {
   return (
     <StyledNav>
       <LeftAligned>
-        <LogoPlaceholder onClick={() => navigate('/')}><img src="/sokanalogo.png" height={200} alt="Sokana Logo" /></LogoPlaceholder>
+        <LogoPlaceholder onClick={() => navigate('/')}>
+          <img src='/sokanalogo.png' height={200} alt='Sokana Logo' />
+        </LogoPlaceholder>
       </LeftAligned>
       <Button.Invisible onClick={() => navigate('/')}>Home</Button.Invisible>
-      <Button.Invisible onClick={() => navigate('/courses')}>Courses</Button.Invisible>
+      <Button.Invisible onClick={() => navigate('/courses')}>
+        Courses
+      </Button.Invisible>
       {user ? (
         <Button.Invisible onClick={handleLogoutClick}>Log Out</Button.Invisible>
       ) : (

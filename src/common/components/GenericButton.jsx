@@ -77,7 +77,7 @@ GenericButton.propTypes = {
 
 GenericButton.defaultProps = {
   color: 'white',
-  bgColor: '#474747', //default background color is grey
+  bgColor: '#007F80', //default background color is teal
   hoverBgColor: '#555555', //hover is darker grey
   fontSize: '16px',
   padding: '8px 16px',

@@ -6,7 +6,8 @@ import {
   PrivateRoute,
   PublicOnlyRoute,
 } from 'common/components/routes/ProtectedRoutes';
-import BodyExample from 'common/components/section/BodyExample';
+import HomeDoulaProgram from 'common/components/section/HomePage/HomeDoulaProgram';
+import HomeIntro from 'common/components/section/HomePage/HomeIntro';
 import { SectionComponent } from 'common/components/section/SectionComponent';
 import { UserProvider } from 'common/contexts/UserContext';
 import NavLayout from 'common/layouts/NavLayout';
@@ -54,7 +55,17 @@ export default function App() {
           backgroundColor='#FBE9FD'
           moreButton={true}
           titleColor={'#007575'}
-          body={<BodyExample />}
+          body={<HomeIntro />}
+        />
+        <SectionComponent
+          sectionTitle='Illinois Medicaid-Certified Doula Program'
+          sectionDescript={[]}
+          sectionGap={0}
+          sectionPaddingBot={128}
+          backgroundColor='#FFFFFF'
+          moreButton={true}
+          titleColor={'#000000'}
+          body={<HomeDoulaProgram />}
         />
       </BrowserRouter>
     </UserProvider>

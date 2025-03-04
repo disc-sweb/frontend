@@ -19,14 +19,11 @@
   padding-top: 72pt;
   font-size: 48pt;
   font-family: 'NotoSansBold';
+  padding-bottom: 72pt;
 }
 
 .section-descript {
-  padding-top: 72pt;
   text-align: left;
   font-size: 16pt;
-}
-
-.body {
-  padding-top: 72pt;
+  padding-bottom: 0pt;
 }

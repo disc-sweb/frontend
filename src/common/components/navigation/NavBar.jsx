@@ -11,8 +11,9 @@ import LogoutModal from './LogoutModal';
 const StyledNav = styled.nav`
   display: flex;
   gap: 10px;
-  padding: 10px 20px;
+  padding: 10px 48px;
   font-size: 20px;
+  border-bottom: 3px solid black;
 `;
 
 const LeftAligned = styled.div`
@@ -54,18 +55,24 @@ export default function NavBar() {
   return (
     <StyledNav>
       <LeftAligned>
-        <LogoPlaceholder onClick={() => navigate('/')}>[LOGO]</LogoPlaceholder>
+        <LogoPlaceholder onClick={() => navigate('/')}>
+          <img src='/sokanalogo.png' height={200} alt='Sokana Logo' />
+        </LogoPlaceholder>
       </LeftAligned>
+      <Button.Invisible onClick={() => navigate('/')}>Home</Button.Invisible>
+      <Button.Invisible onClick={() => navigate('/courses')}>
+        Courses
+      </Button.Invisible>
       {user ? (
-        <Button.Secondary onClick={handleLogoutClick}>Log Out</Button.Secondary>
+        <Button.Invisible onClick={handleLogoutClick}>Log Out</Button.Invisible>
       ) : (
         <>
-          <Button.Primary onClick={() => navigate('/signup')}>
+          {/* <Button.Invisible onClick={() => navigate('/signup')}>
             Sign Up
-          </Button.Primary>
-          <Button.Secondary onClick={() => navigate('/login')}>
+          </Button.Invisible> */}
+          <Button.Invisible onClick={() => navigate('/login')}>
             Login
-          </Button.Secondary>
+          </Button.Invisible>
         </>
       )}
       <LogoutModal

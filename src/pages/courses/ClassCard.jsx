@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -10,8 +11,10 @@ const StyledComponent = styled.div`
   display: flex;
   flex-direction: column;
   width: 500px; /* Increased from 450px */
-  transition: transform 0.3s, box-shadow 0.3s;
-  
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+
   &:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   }
@@ -59,9 +62,9 @@ const StyledComponent = styled.div`
     color: #555;
     margin-bottom: 24px; /* Increased from 20px */
   }
-  
+
   .card-button {
-    background-color: #2D9CDB;
+    background-color: #2d9cdb;
     color: white;
     border: none;
     border-radius: 20px;
@@ -73,7 +76,7 @@ const StyledComponent = styled.div`
     margin-top: auto;
     width: 60%; /* Added width to make button more prominent */
   }
-  
+
   .card-button:hover {
     background-color: #2180b9;
   }
@@ -87,13 +90,13 @@ const ClassCard = ({
 }) => {
   return (
     <StyledComponent>
-      <div className="card-image"></div>
+      <div className='card-image'></div>
       <div className='card-content'>
         <h3 className='card-title'>{class_title}</h3>
         <p className='card-duration'>{class_duration}</p>
         <p className='card-price'>{class_price.toFixed(2)}</p>
         <p className='card-description'>{class_description}</p>
-        <button className="card-button">Go To Course</button>
+        <button className='card-button'>Go To Course</button>
       </div>
     </StyledComponent>
   );

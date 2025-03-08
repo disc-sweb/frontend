@@ -1,14 +1,17 @@
 import React from 'react';
+
 import styled from 'styled-components';
+
 import ClassCard from './ClassCard';
 
 const ClassesStyling = styled.div`
   /* Apply these styles to html and body to ensure full height coverage */
-  html, body {
+  html,
+  body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #FBE9FD;
+    background-color: #fbe9fd;
   }
 
   h1 {
@@ -56,20 +59,20 @@ const ClassesStyling = styled.div`
     gap: 30px;
     justify-content: center;
   }
-  
+
   padding: 50px 100px 50px 100px;
   min-height: 100vh;
   height: auto;
-  background-color: #FBE9FD;
+  background-color: #fbe9fd;
   width: 100%;
   position: relative;
   overflow: auto;
   margin: 0;
   box-sizing: border-box;
-  
+
   @media (max-width: 768px) {
     padding: 30px 20px 30px 20px;
-    
+
     .courses-container {
       justify-content: center;
     }
@@ -81,32 +84,40 @@ const SampleClassData = [
   {
     class_title: 'Class 1',
     class_duration: '1 hour',
-    class_price: 10.00,
-    class_description: 'This is class 1'
+    class_price: 10.0,
+    class_description: 'This is class 1',
   },
   {
     class_title: 'Class 2',
     class_duration: '2 hours',
-    class_price: 20.00,
-    class_description: 'This is class 2'
+    class_price: 20.0,
+    class_description: 'This is class 2',
   },
   {
     class_title: 'Class 3',
     class_duration: '3 hours',
-    class_price: 30.00,
-    class_description: 'This is class 3'
+    class_price: 30.0,
+    class_description: 'This is class 3',
   },
 ];
 
 const Classes = () => {
   return (
     <ClassesStyling>
-      <div className="header-container">
+      <div className='header-container'>
         <h1>Courses</h1>
-        <button className="add-course-button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#007575" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
+        <button className='add-course-button'>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='#007575'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          >
+            <line x1='12' y1='5' x2='12' y2='19'></line>
+            <line x1='5' y1='12' x2='19' y2='12'></line>
           </svg>
           Add Course
         </button>

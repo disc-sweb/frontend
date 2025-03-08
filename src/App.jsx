@@ -14,7 +14,7 @@ import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
 import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
-import Classes from 'pages/classes/Classes';
+import Classes from 'pages/courses/Classes';
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 

@@ -43,10 +43,10 @@ const ClassesStyling = styled.div`
   }
 
   .courses-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Increased from 20px */
+    justify-content: center; /* Centers the cards */
   }
   
   padding: 50px 100px 0px 100px;
@@ -57,7 +57,7 @@ const ClassesStyling = styled.div`
     padding: 30px 20px 0px 20px;
     
     .courses-container {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      justify-content: center;
     }
   }
 `;

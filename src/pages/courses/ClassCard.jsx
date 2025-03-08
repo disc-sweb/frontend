@@ -9,7 +9,7 @@ const StyledComponent = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  min-width: 100%;
+  width: 500px; /* Increased from 450px */
   transition: transform 0.3s, box-shadow 0.3s;
   
   &:hover {
@@ -18,45 +18,46 @@ const StyledComponent = styled.div`
 
   .card-image {
     width: 100%;
-    min-width: 420px;
-    height: 260px;
+    min-width: 470px; /* Increased from 420px */
+    height: 300px; /* Increased from 260px */
     background-color: #f5f5f5;
     object-fit: cover;
   }
 
   .card-content {
-    padding: 20px;
+    padding: 24px; /* Increased from 20px */
     display: flex;
     flex-direction: column;
   }
 
   .card-title {
-    font-size: 18px;
+    font-size: 20px; /* Increased from 18px */
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* Increased from 5px */
     color: #333;
   }
 
   .card-duration {
-    font-size: 12px;
+    font-size: 14px; /* Increased from 12px */
     color: #666;
-    margin-bottom: 8px;
+    margin-bottom: 10px; /* Increased from 8px */
   }
 
   .card-price {
     font-weight: 600;
+    font-size: 18px; /* Added font-size */
     color: #333;
-    margin-bottom: 12px;
+    margin-bottom: 16px; /* Increased from 12px */
     &::before {
       content: '$';
     }
   }
 
   .card-description {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px; /* Increased from 14px */
+    line-height: 1.6; /* Increased from 1.5 */
     color: #555;
-    margin-bottom: 20px;
+    margin-bottom: 24px; /* Increased from 20px */
   }
   
   .card-button {
@@ -64,12 +65,13 @@ const StyledComponent = styled.div`
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 10px 20px; /* Increased from 8px 16px */
+    font-size: 15px; /* Increased from 14px */
     cursor: pointer;
-    align-self: flex-middle;
+    align-self: center; /* Changed from flex-middle to center */
     transition: background-color 0.3s;
     margin-top: auto;
+    width: 60%; /* Added width to make button more prominent */
   }
   
   .card-button:hover {
@@ -83,7 +85,6 @@ const ClassCard = ({
   class_price,
   class_description,
 }) => {
-    console.log(class_description);
   return (
     <StyledComponent>
       <div className="card-image"></div>

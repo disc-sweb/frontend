@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import ClassCard from './ClassCard';
 
 const ClassesStyling = styled.div`
+  /* Apply these styles to html and body to ensure full height coverage */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FBE9FD;
+  }
+
   h1 {
     text-align: center;
     color: #007575;
@@ -45,16 +53,22 @@ const ClassesStyling = styled.div`
   .courses-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Increased from 20px */
-    justify-content: center; /* Centers the cards */
+    gap: 30px;
+    justify-content: center;
   }
   
-  padding: 50px 100px 0px 100px;
-  height: 100%;
+  padding: 50px 100px 50px 100px;
+  min-height: 100vh;
+  height: auto;
   background-color: #FBE9FD;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  margin: 0;
+  box-sizing: border-box;
   
   @media (max-width: 768px) {
-    padding: 30px 20px 0px 20px;
+    padding: 30px 20px 30px 20px;
     
     .courses-container {
       justify-content: center;

@@ -33,6 +33,7 @@ export default function Home() {
       <UsersList /> */}
       <SectionComponent
         sectionTitle='Welcome to our Training Academy - Where We Are Empowering Change Through Education!'
+        titleSize={64}
         sectionDescript={[
           'Step into a world where ancient wisdom and modern expertise converge to create a holistic approach to doula care. At Sokana Collective, we honor the rich traditions of birth support while embracing the latest evidence-based practices, ensuring all people/doulas are equipped to provide comprehensive care to families of all backgrounds.',
           'Our training academy offers a diverse array of classes, meticulously crafted to cater to every aspect of doula practice. From prenatal education and labor support techniques to postpartum care and lactation consulting, our curriculum is designed to empower you with the skills and knowledge needed to confidently guide families through their unique fertility, birthing journeys, and beyond.',
@@ -47,6 +48,7 @@ export default function Home() {
       />
       <SectionComponent
         sectionTitle='Illinois Medicaid-Certified Doula Program'
+        titleSize={28}
         sectionDescript={[]}
         sectionGap={0}
         sectionPaddingBot={128}

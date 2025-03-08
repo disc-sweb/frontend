@@ -6,6 +6,7 @@ import './SectionComponent.css';
 
 const SectionComponent = ({
   sectionTitle,
+  titleSize,
   sectionDescript,
   sectionGap,
   sectionPaddingBot,
@@ -26,7 +27,10 @@ const SectionComponent = ({
         }}
       >
         <div className='section-header'>
-          <div className='section-title' style={{ color: titleColor }}>
+          <div
+            className='section-title'
+            style={{ color: titleColor, fontSize: `${titleSize}px` }}
+          >
             {sectionTitle}
           </div>
           <div className='section-descript'>
@@ -44,6 +48,7 @@ const SectionComponent = ({
 // prop validation via proptypes
 SectionComponent.propTypes = {
   sectionTitle: PropTypes.string.isRequired,
+  titleSize: PropTypes.number.isRequired,
   sectionDescript: PropTypes.arrayOf(PropTypes.string),
   sectionGap: PropTypes.number.isRequired,
   sectionPaddingBot: PropTypes.number.isRequired,

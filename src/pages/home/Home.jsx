@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import Footer from 'common/components/footer/Footer';
 import { SectionComponent } from 'common/components/section/SectionComponent';
 import HomeDoulaProgram from 'pages/home/components/HomeDoulaProgram';
 import HomeIntro from 'pages/home/components/HomeIntro';
@@ -18,7 +19,6 @@ const HomePage = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding-top: 72px;
 `;
 
 export default function Home() {
@@ -57,6 +57,7 @@ export default function Home() {
         titleColor={'#000000'}
         body={<HomeDoulaProgram />}
       />
+      <Footer />
     </HomePage>
   );
 }

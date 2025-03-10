@@ -34,6 +34,7 @@ export default function App() {
                 path='forgot-password'
                 element={<RequestPasswordReset />}
               />
+              <Route path='home' element={<Home />} />
             </Route>
             <Route index element={<Home />} />
             <Route path='auth/callback' element={<AuthCallback />} />

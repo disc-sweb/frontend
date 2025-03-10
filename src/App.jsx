@@ -8,11 +8,13 @@ import {
 } from 'common/components/routes/ProtectedRoutes';
 import { UserProvider } from 'common/contexts/UserContext';
 import NavLayout from 'common/layouts/NavLayout';
+import TestPage from 'pages/TestPage';
 import AuthCallback from 'pages/account/AuthCallback';
 import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
 import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
+import Classes from 'pages/courses/Classes';
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 
@@ -24,9 +26,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<NavLayout />}>
-            <Route element={<PrivateRoute />}>
-              <Route index element={<Home />} />
-            </Route>
+            <Route element={<PrivateRoute />}></Route>
             <Route element={<PublicOnlyRoute />}>
               <Route path='login' element={<Login />} />
               <Route path='signup' element={<SignUp />} />
@@ -36,9 +36,12 @@ export default function App() {
               />
               <Route path='home' element={<Home />} />
             </Route>
+            <Route index element={<Home />} />
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
+            <Route path='courses' element={<Classes />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='test' element={<TestPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

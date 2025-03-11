@@ -83,27 +83,27 @@ const StyledComponent = styled.div`
   }
 `;
 
-const ClassCard = ({
-  class_id,
-  class_title,
-  class_duration,
-  class_price,
-  class_description,
+const CourseCard = ({
+  course_id,
+  course_title,
+  course_duration,
+  course_price,
+  course_description,
 }) => {
   const navigate = useNavigate();
 
   const handleGoToCourse = () => {
-    navigate(`/courses/${class_id}`);
+    navigate(`/courses/${course_id}`);
   };
 
   return (
     <StyledComponent>
       <div className='card-image'></div>
       <div className='card-content'>
-        <h3 className='card-title'>{class_title}</h3>
-        <p className='card-duration'>{class_duration}</p>
-        <p className='card-price'>{class_price.toFixed(2)}</p>
-        <p className='card-description'>{class_description}</p>
+        <h3 className='card-title'>{course_title}</h3>
+        <p className='card-duration'>{course_duration}</p>
+        <p className='card-price'>{course_price.toFixed(2)}</p>
+        <p className='card-description'>{course_description}</p>
         <button className='card-button' onClick={handleGoToCourse}>
           Go To Course
         </button>
@@ -112,16 +112,15 @@ const ClassCard = ({
   );
 };
 
-ClassCard.propTypes = {
-  class_id: PropTypes.number.isRequired,
-  class_title: PropTypes.string.isRequired,
-  class_duration: PropTypes.string.isRequired,
-  class_price: PropTypes.number.isRequired,
-  class_description: PropTypes.string.isRequired,
+CourseCard.propTypes = {
+  course_id: PropTypes.number.isRequired,
+  course_title: PropTypes.string.isRequired,
+  course_duration: PropTypes.string.isRequired,
+  course_price: PropTypes.number.isRequired,
+  course_description: PropTypes.string.isRequired,
+};
+CourseCard.defaultProps = {
+  course_description: 'No description provided',
 };
 
-ClassCard.defaultProps = {
-  class_description: 'No description provided',
-};
-
-export default ClassCard;
+export default CourseCard;

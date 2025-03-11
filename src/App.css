@@ -11,3 +11,15 @@
   font-family: Verdana, sans-serif;
   color: var(--text);
 }
+
+/* font family Poppins for the website description text */
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+/* font family Noto Sans for the website header text */
+@font-face {
+  font-family: 'NotoSansBold';
+  src: url('fonts/NotoSans-Bold.ttf') format('truetype');
+}

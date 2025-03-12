@@ -2,9 +2,9 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import ClassCard from './ClassCard';
+import CourseCard from './CourseCard';
 
-const ClassesStyling = styled.div`
+const CoursesStyling = styled.div`
   /* Apply these styles to html and body to ensure full height coverage */
   html,
   body {
@@ -82,18 +82,21 @@ const ClassesStyling = styled.div`
 const SampleClassData = [
   // Your existing data
   {
+    id: 1,
     class_title: 'Class 1',
     class_duration: '1 hour',
     class_price: 10.0,
     class_description: 'This is class 1',
   },
   {
+    id: 2,
     class_title: 'Class 2',
     class_duration: '2 hours',
     class_price: 20.0,
     class_description: 'This is class 2',
   },
   {
+    id: 3,
     class_title: 'Class 3',
     class_duration: '3 hours',
     class_price: 30.0,
@@ -101,9 +104,9 @@ const SampleClassData = [
   },
 ];
 
-const Classes = () => {
+const Courses = () => {
   return (
-    <ClassesStyling>
+    <CoursesStyling>
       <div className='header-container'>
         <h1>Courses</h1>
         <button className='add-course-button'>
@@ -124,17 +127,18 @@ const Classes = () => {
       </div>
       <div className='courses-container'>
         {SampleClassData.map((classData, index) => (
-          <ClassCard
+          <CourseCard
             key={index}
-            class_title={classData.class_title}
-            class_duration={classData.class_duration}
-            class_price={classData.class_price}
-            class_description={classData.class_description}
+            course_id={classData.id}
+            course_title={classData.class_title}
+            course_duration={classData.class_duration}
+            course_price={classData.class_price}
+            course_description={classData.class_description}
           />
         ))}
       </div>
-    </ClassesStyling>
+    </CoursesStyling>
   );
 };
 
-export default Classes;
+export default Courses;

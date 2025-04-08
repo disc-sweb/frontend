@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -79,32 +80,26 @@ const CoursesStyling = styled.div`
   }
 `;
 
-const SampleClassData = [
-  // Your existing data
-  {
-    id: 1,
-    class_title: 'Class 1',
-    class_duration: '1 hour',
-    class_price: 10.0,
-    class_description: 'This is class 1',
-  },
-  {
-    id: 2,
-    class_title: 'Class 2',
-    class_duration: '2 hours',
-    class_price: 20.0,
-    class_description: 'This is class 2',
-  },
-  {
-    id: 3,
-    class_title: 'Class 3',
-    class_duration: '3 hours',
-    class_price: 30.0,
-    class_description: 'This is class 3',
-  },
-];
-
 const Courses = () => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the backend
+    const fetchData = async () => {
+      try {
+        const backendUrl =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+        const response = await fetch(`${backendUrl}/courses`);
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <CoursesStyling>
       <div className='header-container'>
@@ -126,14 +121,14 @@ const Courses = () => {
         </button>
       </div>
       <div className='courses-container'>
-        {SampleClassData.map((classData, index) => (
+        {courses.map((classData, index) => (
           <CourseCard
             key={index}
             course_id={classData.id}
-            course_title={classData.class_title}
+            course_title={classData.title}
             course_duration={classData.class_duration}
-            course_price={classData.class_price}
-            course_description={classData.class_description}
+            course_price={classData.price}
+            course_description={classData.description}
           />
         ))}
       </div>

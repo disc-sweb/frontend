@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import Footer from 'common/components/footer/Footer';
+
 import CourseCard from './CourseCard';
 
 const CoursesStyling = styled.div`
@@ -101,38 +103,41 @@ const Courses = () => {
   }, []);
 
   return (
-    <CoursesStyling>
-      <div className='header-container'>
-        <h1>Courses</h1>
-        <button className='add-course-button'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='#007575'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          >
-            <line x1='12' y1='5' x2='12' y2='19'></line>
-            <line x1='5' y1='12' x2='19' y2='12'></line>
-          </svg>
-          Add Course
-        </button>
-      </div>
-      <div className='courses-container'>
-        {courses.map((classData, index) => (
-          <CourseCard
-            key={index}
-            course_id={classData.id}
-            course_title={classData.title}
-            course_duration={classData.class_duration}
-            course_price={classData.price}
-            course_description={classData.description}
-          />
-        ))}
-      </div>
-    </CoursesStyling>
+    <div>
+      <CoursesStyling>
+        <div className='header-container'>
+          <h1>Courses</h1>
+          <button className='add-course-button'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='#007575'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <line x1='12' y1='5' x2='12' y2='19'></line>
+              <line x1='5' y1='12' x2='19' y2='12'></line>
+            </svg>
+            Add Course
+          </button>
+        </div>
+        <div className='courses-container'>
+          {courses.map((classData, index) => (
+            <CourseCard
+              key={index}
+              course_id={classData.id}
+              course_title={classData.title}
+              course_duration={classData.class_duration}
+              course_price={classData.price}
+              course_description={classData.description}
+            />
+          ))}
+        </div>
+      </CoursesStyling>
+      <Footer />
+    </div>
   );
 };
 

@@ -3,12 +3,12 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-family: 'Poppins';
   width: auto;
 }
 
 .page-section {
   text-align: center;
+  font-family: 'PoppinsLight';
 }
 
 .section-header {
@@ -28,4 +28,8 @@
   font-size: 16px;
   padding-bottom: 0pt;
   line-height: 36px;
+}
+
+p {
+  font-family: 'PoppinsLight';
 }

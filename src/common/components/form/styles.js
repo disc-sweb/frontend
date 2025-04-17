@@ -19,16 +19,29 @@ export const RedSpan = styled.span`
 `;
 
 export const StyledInput = styled.input`
+  width: 100%;
   font-size: 1rem;
-  padding: 8px;
-  border: solid 2px var(--text);
-  border-radius: 8px;
-  width: 375px;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 1px solid #999;
+  background-color: transparent;
+  color: #333;
+
+  &:focus {
+    border-bottom: 1px solid #007bff;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: #aaa;
+  }
 `;
 
 export const PasswordContainer = styled.div`
   position: relative;
-  width: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const IconContainer = styled.div`
@@ -41,9 +54,11 @@ export const IconContainer = styled.div`
 
 export const StyledButton = styled(Button.Primary)`
   font-size: 1.1rem;
-  width: 200px;
+  width: 100%;
   font-align: center;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+  background-color: #474747;
+  color: #ffffff;
 `;

@@ -1,0 +1,38 @@
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 72px;
+  line-height: 36px;
+}
+
+.text-description {
+  width: 88vw;
+  font-size: 16px;
+}
+
+.academy-description {
+  display: flex;
+  flex-direction: row;
+  width: 88vw;
+  align-items: flex-start;
+  gap: 72px;
+}
+
+.academy-description-text {
+  font-size: 16px;
+  width: 60%;
+  min-width: 300px;
+  height: auto;
+  text-align: left;
+  padding-right: 5%;
+}
+
+.academy-description-img {
+  padding-top: 24px;
+  width: 40%;
+  max-width: 400px;
+  height: auto;
+}

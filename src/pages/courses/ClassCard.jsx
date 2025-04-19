@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledComponent = styled.div`
@@ -83,11 +84,27 @@ const StyledComponent = styled.div`
 `;
 
 const ClassCard = ({
+  class_id,
   class_title,
   class_duration,
   class_price,
   class_description,
 }) => {
+  const navigate = useNavigate();
+  const handleGoToCourse = () => {
+    navigate(`/register/${class_id}`, {
+      state: {
+        course: {
+          class_id,
+          class_title,
+          class_duration,
+          class_price,
+          class_description,
+        },
+      },
+    });
+  };
+
   return (
     <StyledComponent>
       <div className='card-image'></div>
@@ -96,13 +113,16 @@ const ClassCard = ({
         <p className='card-duration'>{class_duration}</p>
         <p className='card-price'>{class_price.toFixed(2)}</p>
         <p className='card-description'>{class_description}</p>
-        <button className='card-button'>Go To Course</button>
+        <button className='card-button' onClick={handleGoToCourse}>
+          Go To Course
+        </button>
       </div>
     </StyledComponent>
   );
 };
 
 ClassCard.propTypes = {
+  class_id: PropTypes.string.isRequired,
   class_title: PropTypes.string.isRequired,
   class_duration: PropTypes.string.isRequired,
   class_price: PropTypes.number.isRequired,

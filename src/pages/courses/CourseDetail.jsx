@@ -181,6 +181,7 @@ const CourseDetail = () => {
         console.log('response: ', data);
         setCourseData(data);
 
+
         // Mock data - replace with actual API call
         const mockCourseData = {
           id: courseId,
@@ -237,6 +238,7 @@ const CourseDetail = () => {
             ) : (
               <div>No video available</div>
             )}
+
           </VideoContainer>
 
           <CourseInfo>

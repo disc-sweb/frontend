@@ -104,6 +104,7 @@ const Courses = () => {
         console.log('response: ', data);
         setUserCourses(data['userCourses']);
         setNonUserCourses(data['nonUserCourses']);
+
         setCourses(data);
       } catch (error) {
         console.error('Error fetching data:', error);

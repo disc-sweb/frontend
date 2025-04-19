@@ -13,6 +13,7 @@ import GenericButton from 'common/components/GenericButton';
 const FooterContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   align-items: flex-start;
   background-color: #007f80;
   padding: 72px 0px;
@@ -53,8 +54,7 @@ const Text = styled.p`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   margin: ${(props) => props.margin};
-  white-space: nowrap;
-  overflow: visible;
+
 `;
 
 const Img = styled.img`

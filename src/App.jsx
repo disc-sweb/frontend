@@ -14,13 +14,8 @@ import Login from 'pages/account/Login';
 import RequestPasswordReset from 'pages/account/RequestPasswordReset';
 import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
-<<<<<<< HEAD
-import Classes from 'pages/courses/Classes';
-import Register from 'pages/courses/Register';
-=======
 import CourseDetail from 'pages/courses/CourseDetail';
 import Courses from 'pages/courses/Courses';
->>>>>>> origin/main
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 
@@ -45,13 +40,9 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
-<<<<<<< HEAD
-            <Route path='courses' element={<Classes />} />
-            <Route path='register/:classId' element={<Register />} />
-=======
+
             <Route path='courses' element={<Courses />} />
             <Route path='courses/:courseId' element={<CourseDetail />} />
->>>>>>> origin/main
             <Route path='*' element={<NotFound />} />
             <Route path='test' element={<TestPage />} />
           </Route>

@@ -8,6 +8,7 @@ const SectionComponent = ({
   sectionTitle,
   titleSize,
   sectionDescript,
+  sectionAlign,
   sectionGap,
   sectionPaddingBot,
   backgroundColor = 'transparent',
@@ -35,11 +36,14 @@ const SectionComponent = ({
           </div>
           <div className='section-descript'>
             {sectionDescript.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
+
+              <p key={index} style={{ textAlign: sectionAlign }}>
+                {paragraph}
+              </p>
             ))}
           </div>
         </div>
-        <div className='body'>{body}</div>
+        <div>{body}</div>
       </div>
     </div>
   );
@@ -50,6 +54,8 @@ SectionComponent.propTypes = {
   sectionTitle: PropTypes.string.isRequired,
   titleSize: PropTypes.number.isRequired,
   sectionDescript: PropTypes.arrayOf(PropTypes.string),
+
+  sectionAlign: PropTypes.string,
   sectionGap: PropTypes.number.isRequired,
   sectionPaddingBot: PropTypes.number.isRequired,
   backgroundColor: PropTypes.string,

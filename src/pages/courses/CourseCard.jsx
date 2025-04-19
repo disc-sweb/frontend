@@ -123,6 +123,7 @@ CourseCard.propTypes = {
   course_duration: PropTypes.string.isRequired,
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
+  course_image: PropTypes.string.isRequired,
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',

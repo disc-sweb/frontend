@@ -26,12 +26,7 @@ export default function HomeDoulaProgram() {
   return (
     <div>
       <div className='text-container'>
-        <p className='text-description'>
-          SIU School of Medicine&apos;s Office of Certification Strategies
-          administers the Illinois Medicaid-Certified Doula Program with
-          oversight guidance by the Illinois Department of Healthcare and Family
-          Services.
-        </p>
+
         <div className='academy-description'>
           <p className='academy-description-text'>
             Sokana Collective&apos;s Training Academy offers comprehensive
@@ -42,7 +37,7 @@ export default function HomeDoulaProgram() {
           </p>
           <img
             src={homepagedoula}
-            alt='Logo'
+            alt='Baby'
             className='academy-description-img'
           />
         </div>

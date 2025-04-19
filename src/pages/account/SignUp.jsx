@@ -8,7 +8,7 @@ import { Input } from 'common/components/form/Input';
 import SubmitButton from 'common/components/form/SubmitButton';
 import { useUser } from 'common/contexts/UserContext';
 
-import { StyledPage } from './styles';
+import { StyledForm, StyledPage } from './styles';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -17,20 +17,13 @@ export default function SignUp() {
   const { googleAuth } = useUser();
 
   const [formState, setFormState] = useState({
-    firstname: '',
-    lastname: '',
+    fullname: '',
     email: '',
     password: '',
-    username: '',
   });
 
-  const handleChangeFirstname = (e) => {
-    setFormState({ ...formState, firstname: e.target.value });
-    setError('');
-  };
-
-  const handleChangeLastname = (e) => {
-    setFormState({ ...formState, lastname: e.target.value });
+  const handleChangeFullname = (e) => {
+    setFormState({ ...formState, fullname: e.target.value });
     setError('');
   };
 
@@ -41,11 +34,6 @@ export default function SignUp() {
 
   const handleChangePassword = (e) => {
     setFormState({ ...formState, password: e.target.value });
-    setError('');
-  };
-
-  const handleChangeUsername = (e) => {
-    setFormState({ ...formState, username: e.target.value });
     setError('');
   };
 
@@ -73,9 +61,7 @@ export default function SignUp() {
           body: JSON.stringify({
             email: formState.email,
             password: formState.password,
-            username: formState.username || undefined,
-            firstname: formState.firstname || undefined,
-            lastname: formState.lastname || undefined,
+            fullname: formState.fullname || undefined,
           }),
         }
       );
@@ -104,49 +90,39 @@ export default function SignUp() {
 
   return (
     <StyledPage>
-      <Form onSubmit={handleSubmit}>
-        <FormTitle>Create an account</FormTitle>
-        {error && <div className='text-red-500 mb-4'>{error}</div>}
-        <Input.Text
-          title='First name'
-          placeholder='John'
-          value={formState.firstname}
-          onChange={handleChangeFirstname}
-        />
-        <Input.Text
-          title='Last name'
-          placeholder='Smith'
-          value={formState.lastname}
-          onChange={handleChangeLastname}
-        />
-        <Input.Text
-          title='Email'
-          placeholder='j@example.com'
-          value={formState.email}
-          onChange={handleChangeEmail}
-          required
-        />
-        <Input.Text
-          title='Username'
-          placeholder='johnsmith'
-          value={formState.username}
-          onChange={handleChangeUsername}
-        />
-        <Input.Password
-          title='Password'
-          value={formState.password}
-          onChange={handleChangePassword}
-          required
-        />
-        <SubmitButton onClick={() => {}} disabled={isLoading}>
-          {isLoading ? 'Creating account...' : 'Sign Up'}
-        </SubmitButton>
-        <GoogleButton
-          onClick={handleGoogleSignup}
-          isLoading={isLoading}
-          text='Sign up with Google'
-        />
-      </Form>
+      <StyledForm>
+        <Form onSubmit={handleSubmit}>
+          <FormTitle>Signup</FormTitle>
+          {error && <div className='text-red-500 mb-4'>{error}</div>}
+          <Input.Text
+            title='FULL NAME'
+            placeholder='John'
+            value={formState.fullname}
+            onChange={handleChangeFullname}
+          />
+          <Input.Text
+            title='EMAIL'
+            placeholder='j@example.com'
+            value={formState.email}
+            onChange={handleChangeEmail}
+            required
+          />
+          <Input.Password
+            title='PASSWORD'
+            value={formState.password}
+            onChange={handleChangePassword}
+            required
+          />
+          <SubmitButton onClick={() => {}} disabled={isLoading}>
+            {isLoading ? 'Creating account...' : 'Sign Up'}
+          </SubmitButton>
+          <GoogleButton
+            onClick={handleGoogleSignup}
+            isLoading={isLoading}
+            text='Sign up with Google'
+          />
+        </Form>
+      </StyledForm>
     </StyledPage>
   );
 }

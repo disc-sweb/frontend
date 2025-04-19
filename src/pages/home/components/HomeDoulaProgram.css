@@ -16,18 +16,17 @@
 .academy-description {
   display: flex;
   flex-direction: row;
-  width: 88vw;
   align-items: flex-start;
+  justify-content: space-around;
   gap: 72px;
+  box-sizing: border-box;
 }
 
 .academy-description-text {
   font-size: 16px;
-  width: 60%;
-  min-width: 300px;
-  height: auto;
+  flex: 1 1 calc(50% - 48px);
+  box-sizing: border-box;
   text-align: left;
-  padding-right: 5%;
 }
 
 .academy-description-img {

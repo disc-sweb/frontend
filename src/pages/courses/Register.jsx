@@ -87,7 +87,7 @@ const Register = () => {
           target='_blank'
           rel='noopener noreferrer'
         >
-          Registration Form
+          Registration Form Here
         </a>
         <button className='payment-button' onClick={handlePaymentClick}>
           Continue to Payment

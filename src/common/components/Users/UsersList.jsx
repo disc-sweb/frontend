@@ -69,6 +69,10 @@ export default function UsersList() {
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          throw new Error('Unexpected response from server');
+        }
 
         const data = await response.json();
         setUsers(data);

@@ -36,7 +36,7 @@ export default function HomeDoulaProgram() {
           </p>
           <img
             src={homepagedoula}
-            alt='Image of a baby'
+            alt='Baby'
             className='academy-description-img'
           />
         </div>

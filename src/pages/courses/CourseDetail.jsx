@@ -236,6 +236,13 @@ const CourseDetail = () => {
 
         <ContentWrapper>
           <VideoContainer>
+            {/* <iframe
+              height='100%'
+              src={courseData.video_link}
+              title='Course Video'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+            ></iframe> */}
             <PlayButton />
           </VideoContainer>
 

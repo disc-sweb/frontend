@@ -40,6 +40,7 @@ export default function App() {
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
             <Route path='courses' element={<Classes />} />
+            <Route path='register/:classId' element={<Register />} />
             <Route path='*' element={<NotFound />} />
             <Route path='test' element={<TestPage />} />
           </Route>

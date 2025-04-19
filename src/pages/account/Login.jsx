@@ -86,7 +86,7 @@ export default function Login() {
           <FormTitle>Login</FormTitle>
           {error && <RedSpan>{error}</RedSpan>}
           <Input.Text
-            title='Email'
+            title='EMAIL'
             name='email'
             placeholder='jsmith or j@example.com'
             value={formState.email}
@@ -94,7 +94,7 @@ export default function Login() {
             required
           />
           <Input.Password
-            title='Password'
+            title='PASSWORD'
             name='password'
             value={formState.password}
             onChange={handleChange}

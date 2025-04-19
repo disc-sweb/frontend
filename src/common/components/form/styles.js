@@ -13,6 +13,7 @@ export const InputName = styled.h3`
 `;
 export const InputTitle = styled.span`
   margin-right: 2px;
+  font-family: 'PoppinsMedium';
 `;
 export const RedSpan = styled.span`
   color: red;

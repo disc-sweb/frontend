@@ -91,7 +91,9 @@ export default function CourseConfirmation() {
       <StyledComponent>
         <h1>
           You have successfully signed up for {course.title}
-          {course.course_type === 'Online' && ` at ${course?.price}`}!
+          {/*Only shows the line below if course type includes 'Online'*/}
+          {course.course_type?.includes('Online') &&
+            ` at ${course.dateTime}`}!{' '}
         </h1>
         <ConfirmText>
           We have sent an email confirming the registration. Thank you!

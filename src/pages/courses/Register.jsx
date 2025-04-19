@@ -1,21 +1,9 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-// import PropTypes from 'prop-types';
-// 2. Third-party modules
-// import styled from 'styled-components';
-
-// import Button from 'common/components/Button';
-// 3. Absolute paths from src/
-// import { useAuth } from 'common/hooks/useAuth';
-
-// 4. Relative paths
-// import { StyledContainer } from './styles';
-
-// add styling
 const RegisterStyling = styled.div`
   min-height: 100vh;
   background-color: #f3e8ff; /* soft purple */

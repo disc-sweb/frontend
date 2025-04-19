@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -156,32 +157,41 @@ const RegisterButton = styled.button`
 const CourseDetail = () => {
   // Get the courseId parameter from the URL
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
   // State to store course data
   const [courseData, setCourseData] = useState(null);
 
   // State for loading status
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Fetch course data based on the ID
   useEffect(() => {
     // Simulated API call for demonstration
     const fetchCourse = async () => {
       try {
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        const backendUrl =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
-        // Mock data - replace with actual API call
-        const mockCourseData = {
-          id: courseId,
-          title: 'Course Title',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dui felis, malesuada sit amet imperdiet vitae, convallis a ipsum. Nam ornare bibendum felis. Cras ac est eu augue dictum imperdiet sit amet non leo. Cras auctor commodo odio semper blandit. Ut felis nulla, scelerisque eget suscipit nec, mattis in turpis.',
-        };
+        const token = localStorage.getItem('authToken');
 
-        setCourseData(mockCourseData);
+        const response = await fetch(`${backendUrl}/courses/${courseId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Course not found');
+        }
+        const data = await response.json();
+        setCourseData(data);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching data:', error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -189,6 +199,12 @@ const CourseDetail = () => {
 
     fetchCourse();
   }, [courseId]);
+
+  useEffect(() => {
+    if (error) {
+      navigate('/NotFound');
+    }
+  }, [error, navigate]);
 
   if (loading) {
     return (
@@ -203,6 +219,10 @@ const CourseDetail = () => {
         </div>
       </CourseDetailContainer>
     );
+  }
+
+  if (!courseData) {
+    return null;
   }
 
   return (

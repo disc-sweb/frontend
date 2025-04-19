@@ -26,6 +26,20 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledLinkCenter = styled(Link)`
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  align-self: center;
+  font-family: 'PoppinsMedium';
+  color: #007575;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export default function Login() {
   const navigate = useNavigate();
   const { login, googleAuth } = useUser();
@@ -95,7 +109,9 @@ export default function Login() {
             isLoading={isLoading}
             text='Sign in with Google'
           />
-          <StyledLink to='/signup'>I DON&apos;T HAVE AN ACCOUNT</StyledLink>
+          <StyledLinkCenter to='/signup'>
+            I DON&apos;T HAVE AN ACCOUNT
+          </StyledLinkCenter>
         </Form>
       </StyledForm>
     </StyledPage>

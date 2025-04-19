@@ -1,3 +1,4 @@
+import 'App.css';
 import styled from 'styled-components';
 
 import { Button } from 'common/components/Button';
@@ -6,22 +7,26 @@ export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 25%;
+  width: 40%;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
+  background-color: #ffffff;
+  font-family: 'PoppinsLight';
 `;
 
 export const StyledInput = styled.input`
   font-size: 1rem;
-  padding: 8px;
-  border-radius: 8px;
-  width: 375px;
-`;
+  padding: 8px 32px 8px 0; /* space for the eye icon on the right */
+  border: none;
+  border-bottom: 1px solid gray;
+  width: 100%;
+  outline: none;
 
-export const PasswordContainer = styled.div`
-  position: relative;
-  width: fit-content;
+  &:focus {
+    border-bottom: 2px solid #007bff;
+  }
 `;
 
 export const IconContainer = styled.div`
@@ -37,6 +42,8 @@ export const StyledPage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fbe9fd;
+  font-family: 'PoppinsLight';
 `;
 
 export const StyledButton = styled(Button.Primary)`

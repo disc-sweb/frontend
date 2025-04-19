@@ -68,11 +68,15 @@ const RegisterStyling = styled.div`
 `;
 
 const Register = () => {
-  const { classId } = useParams();
+  // const { classId } = useParams();
   //   const navigate = useNavigate();
 
   const handlePaymentClick = () => {
     // open Stripe?
+  };
+  const course = {
+    class_title: 'Mock Class: Intro to Web Magic',
+    description: 'Learn how to charm the DOM and conjure layouts.',
   };
 
   return (

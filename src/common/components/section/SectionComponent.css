@@ -16,20 +16,18 @@
 
 .section-header {
   text-align: center;
-  width: 90vw;
 }
 
 .section-title {
   padding-top: 72pt;
-  font-size: 48pt;
-  font-family: 'NotoSansBold';
+  font-size: 48px;
+  font-family: 'AcuminPro';
   padding-bottom: 72pt;
 }
 
 .section-descript {
   text-align: left;
   font-size: 16px;
-  padding-bottom: 0pt;
   line-height: 36px;
 }
 

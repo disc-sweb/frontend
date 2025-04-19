@@ -9,6 +9,7 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.fontSize};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
+  font-family: 'Poppins';
   border: none;
   border-radius: 100px;
   cursor: pointer;
@@ -55,7 +56,7 @@ const GenericButton = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span>{text}</span>
+      {text}
       {hasIcon && iconSrc && (
         <img src={iconSrc} alt='icon' className='button-icon' />
       )}

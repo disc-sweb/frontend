@@ -12,6 +12,10 @@
   color: var(--text);
 }
 
+button {
+  font-family: inherit;
+}
+
 /* font family Poppins for the website description text */
 @font-face {
   font-family: 'PoppinsBold';
@@ -32,4 +36,9 @@
 @font-face {
   font-family: 'NotoSansBold';
   src: url('fonts/NotoSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AcuminPro';
+  src: url('fonts/Acumin-BdPro.otf') format('opentype');
 }

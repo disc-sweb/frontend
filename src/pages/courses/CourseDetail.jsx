@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
@@ -60,41 +59,68 @@ const ContentWrapper = styled.div`
 `;
 
 const VideoContainer = styled.div`
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  overflow: hidden;
-  flex: 1;
-  height: 100%;
   width: calc(50% - 10px);
-  min-height: 500px;
+  aspect-ratio: 16 / 9; // Ensures correct video shape
+  overflow: hidden;
+  border-radius: 4px;
 
   @media (max-width: 1200px) {
     width: 100%;
-    min-height: 500px;
+  }
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+`;
+
+const VideoPlaceholder = styled.div`
+  background-color: #f0f0f0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 8px;
+  display: flex;
+  align-items: center; // Vertical center
+  justify-content: center; // Horizontal center
+
+  height: 500px;
+
+  @media (max-width: 1024px) {
+    height: 400px;
+  }
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+
+  @media (max-width: 480px) {
+    height: 200px;
   }
 `;
 
 const PlayButton = styled.div`
   width: 60px;
   height: 60px;
-  border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 
-  &:before {
+  &::before {
     content: '';
+    display: block;
     width: 0;
     height: 0;
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-left: 20px solid white;
-    margin-left: 5px;
+    border-left: 15px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
   }
 `;
 
@@ -236,14 +262,18 @@ const CourseDetail = () => {
 
         <ContentWrapper>
           <VideoContainer>
-            {/* <iframe
-              height='100%'
-              src={courseData.video_link}
-              title='Course Video'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              allowFullScreen
-            ></iframe> */}
-            <PlayButton />
+            {courseData.video_link ? (
+              <video
+                src={courseData.video_link}
+                title='Course Video'
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                allowFullScreen
+              />
+            ) : (
+              <VideoPlaceholder>
+                <PlayButton />
+              </VideoPlaceholder>
+            )}
           </VideoContainer>
 
           <CourseInfo>

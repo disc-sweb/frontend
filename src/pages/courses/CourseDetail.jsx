@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Footer from 'common/components/footer/Footer';
+
 const CourseDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 50px 20px 50px;
+  margin: 100px 50px 150px 50px;
 `;
 
 const BackButtonContainer = styled.div`
@@ -204,30 +206,33 @@ const CourseDetail = () => {
   }
 
   return (
-    <CourseDetailContainer>
-      <BackButtonContainer>
-        <BackButton to='/courses'>
-          <BackArrow />
-        </BackButton>
-      </BackButtonContainer>
+    <div>
+      <CourseDetailContainer>
+        <BackButtonContainer>
+          <BackButton to='/courses'>
+            <BackArrow />
+          </BackButton>
+        </BackButtonContainer>
 
-      <ContentWrapper>
-        <VideoContainer>
-          <PlayButton />
-        </VideoContainer>
+        <ContentWrapper>
+          <VideoContainer>
+            <PlayButton />
+          </VideoContainer>
 
-        <CourseInfo>
-          <CourseTitle>{courseData.title}</CourseTitle>
+          <CourseInfo>
+            <CourseTitle>{courseData.title}</CourseTitle>
 
-          <Description>
-            <h2>Description:</h2>
-            <p>{courseData.description}</p>
-          </Description>
+            <Description>
+              <h2>Description:</h2>
+              <p>{courseData.description}</p>
+            </Description>
 
-          <RegisterButton>Register for this course</RegisterButton>
-        </CourseInfo>
-      </ContentWrapper>
-    </CourseDetailContainer>
+            <RegisterButton>Register for this course</RegisterButton>
+          </CourseInfo>
+        </ContentWrapper>
+      </CourseDetailContainer>
+      <Footer />
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button } from 'common/components/Button';
@@ -14,12 +14,28 @@ const StyledNav = styled.nav`
   padding: 10px 48px;
   font-size: 20px;
   border-bottom: 3px solid black;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    padding: 1.5rem;
+    align-items: center;
+  }
 `;
 
 const LeftAligned = styled.div`
   flex: 1;
   display: flex;
   gap: 10px;
+`;
+
+const RightAligned = styled.div`
+  display: flex;
+  gap: 4.6rem;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding: 0 1.7rem;
 `;
 
 const LogoPlaceholder = styled(Button.Invisible)`
@@ -29,10 +45,41 @@ const LogoPlaceholder = styled(Button.Invisible)`
   font-family: monospace;
 `;
 
+const AnimatedLink = styled(Button.Invisible)`
+  position: relative;
+  padding: 4px 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+  text-decoration: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    height: 2px;
+    width: 100%;
+    background-color: #007f80;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+
+  &.active::after {
+    transform: scaleX(1);
+  }
+`;
+
 export default function NavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { user, logout } = useUser();
+  const location = useLocation();
 
   const handleLogoutClick = () => {
     setIsModalOpen(true);
@@ -59,27 +106,40 @@ export default function NavBar() {
           <img src='/sokanalogo.png' height={200} alt='Sokana Logo' />
         </LogoPlaceholder>
       </LeftAligned>
-      <Button.Invisible onClick={() => navigate('/')}>Home</Button.Invisible>
-      <Button.Invisible onClick={() => navigate('/courses')}>
-        Courses
-      </Button.Invisible>
-      {user ? (
-        <Button.Invisible onClick={handleLogoutClick}>Log Out</Button.Invisible>
-      ) : (
-        <>
-          {/* <Button.Invisible onClick={() => navigate('/signup')}>
-            Sign Up
-          </Button.Invisible> */}
-          <Button.Invisible onClick={() => navigate('/login')}>
+      <RightAligned>
+        <AnimatedLink
+          className={location.pathname === '/' ? 'active' : ''}
+          onClick={() => navigate('/')}
+        >
+          Home
+        </AnimatedLink>
+        <AnimatedLink
+          className={location.pathname === '/courses' ? 'active' : ''}
+          onClick={() => navigate('/courses')}
+        >
+          Courses
+        </AnimatedLink>
+        {user ? (
+          <AnimatedLink
+            className={isModalOpen ? 'active' : ''}
+            onClick={handleLogoutClick}
+          >
+            Log Out
+          </AnimatedLink>
+        ) : (
+          <AnimatedLink
+            className={location.pathname === '/login' ? 'active' : ''}
+            onClick={() => navigate('/login')}
+          >
             Login
-          </Button.Invisible>
-        </>
-      )}
-      <LogoutModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        onLogout={handleLogoutConfirm}
-      />
+          </AnimatedLink>
+        )}
+        <LogoutModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onLogout={handleLogoutConfirm}
+        />
+      </RightAligned>
     </StyledNav>
   );
 }

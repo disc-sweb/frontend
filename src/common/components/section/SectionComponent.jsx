@@ -42,7 +42,7 @@ const SectionComponent = ({
             ))}
           </div>
         </div>
-        <div className='body'>{body}</div>
+        <div>{body}</div>
       </div>
     </div>
   );

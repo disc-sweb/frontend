@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
 
+import VideoPlayer from './VideoPlayer';
+
 const CourseDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -185,8 +187,11 @@ const CourseDetail = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
 
-  // State to store course data
+  // State to store course data and  user course data
   const [courseData, setCourseData] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userCourseData, setUserCourseData] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   // State for loading status
   const [loading, setLoading] = useState(true);
@@ -201,6 +206,11 @@ const CourseDetail = () => {
           process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
         const token = localStorage.getItem('authToken');
+        if (!token) {
+          console.warn('No token found. User may not be logged in.');
+          setLoading(false);
+          return;
+        }
 
         const response = await fetch(`${backendUrl}/courses/${courseId}`, {
           method: 'GET',
@@ -226,11 +236,96 @@ const CourseDetail = () => {
     fetchCourse();
   }, [courseId]);
 
+  // Fetch User Id from the backend
   useEffect(() => {
-    if (error) {
-      navigate('/NotFound');
-    }
-  }, [error, navigate]);
+    // Simulated API call for demonstration
+    const fetchUserId = async () => {
+      try {
+        const backendUrl =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+          console.log('User token', token);
+          console.warn('User not logged in.');
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`${backendUrl}/auth/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        const meData = await response.json();
+        console.log('User data:', meData);
+        setUserId(meData.id);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
+  // Get User Id
+  useEffect(() => {
+    // Simulated API call for demonstration
+    const fetchUserCourse = async () => {
+      try {
+        const backendUrl =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+
+        const userToken = localStorage.getItem('authToken');
+
+        if (!userToken) {
+          console.log('User token', userToken);
+          console.warn('User not logged in.');
+          setLoading(false);
+          return;
+        }
+        const userResponse = await fetch(
+          `${backendUrl}/courses/getUserCourses`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${userToken}`,
+            },
+            body: JSON.stringify({ userId }),
+          }
+        );
+        if (!userResponse.ok) {
+          throw new Error('Failed to fetch user courses');
+        }
+        const userData = await userResponse.json();
+        console.log('User course data:', userData);
+        setUserCourseData(userData);
+      } catch (error) {
+        console.error('Error fetching user courses:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserCourse();
+  }, []);
+
+  // useEffect(() => {
+  //   if (error) {
+  //     navigate('/NotFound');
+  //   }
+  // }, [error, navigate]);
 
   if (loading) {
     return (
@@ -251,6 +346,39 @@ const CourseDetail = () => {
     return null;
   }
 
+  // Check if the user is registered for the course from the backend
+  const hasAccess = (userCourseData, courseId) => {
+    // Check if the user is registered for the course
+    return (
+      Array.isArray(userCourseData) &&
+      userCourseData.some((entry) => entry.course_id === courseId)
+    );
+  };
+
+  if (hasAccess(userCourseData, courseId)) {
+    setIsRegistered(true);
+    console.log('User is registered for the course');
+  }
+
+  // Need to Update for it to actually do stuff (check if video is in user information from backend)
+  // Simulated registration logic
+  // Need to do 2 Things:
+  // loop through videos to check if user is regsitered to the course
+  // if not registered:
+  // 1. navigate to the place for them to regsiter
+  // 2. update the state to show that they are registered
+  // Give them access to the video
+  // Change the button to "Registered"
+  const handleRegister = () => {
+    if (hasAccess(userCourseData, courseId)) {
+      setIsRegistered(true);
+      return;
+    } else {
+      //navigate('/register'); //work in process (need a regiuster page)
+      alert('You have successfully registered for this course!');
+    }
+  };
+
   return (
     <div>
       <CourseDetailContainer>
@@ -263,11 +391,13 @@ const CourseDetail = () => {
         <ContentWrapper>
           <VideoContainer>
             {courseData.video_link ? (
-              <video
+              <VideoPlayer
+                videoLink='{courseData.video_link}'
+                isRegistered={isRegistered}
+                onRegister={handleRegister}
                 src={courseData.video_link}
                 title='Course Video'
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                allowFullScreen
               />
             ) : (
               <VideoPlaceholder>
@@ -284,7 +414,12 @@ const CourseDetail = () => {
               <p>{courseData.description}</p>
             </Description>
 
-            <RegisterButton>Register for this course</RegisterButton>
+            {/* Check if the user is registered for the course to show the Register Button */}
+            {!isRegistered && (
+              <RegisterButton onClick={handleRegister}>
+                Register for this course
+              </RegisterButton>
+            )}
           </CourseInfo>
         </ContentWrapper>
       </CourseDetailContainer>

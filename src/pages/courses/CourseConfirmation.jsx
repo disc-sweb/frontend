@@ -50,6 +50,10 @@ export default function CourseConfirmation() {
           process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
 
         const token = localStorage.getItem('authToken');
+        if (!token) {
+          console.warn('No token found. User may not be logged in.');
+          return;
+        }
 
         const response = await fetch(`${backendUrl}/courses/${courseId}`, {
           method: 'GET',

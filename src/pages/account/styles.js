@@ -11,7 +11,7 @@ export const StyledForm = styled.form`
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 50px;
   background-color: #ffffff;
   font-family: 'PoppinsLight';
 `;
@@ -44,6 +44,8 @@ export const StyledPage = styled.div`
   align-items: center;
   background-color: #fbe9fd;
   font-family: 'PoppinsLight';
+  padding-top: 25px;
+  padding-bottom: 100px;
 `;
 
 export const StyledButton = styled(Button.Primary)`

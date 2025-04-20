@@ -1,65 +1,46 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import PropTypes from 'prop-types';
 
-const VideoPlayer = ({ videoLink, isRegistered, onRegister }) => {
+const VideoPlayer = ({ videoLink, isRegistered }) => {
+  console.log('Video link', videoLink);
   const videoRef = useRef(null);
-  const [hasAccess, setHasAccess] = useState(isRegistered);
 
-  useEffect(() => {
-    setHasAccess(isRegistered);
-  }, [isRegistered]);
-
-  const handleTimeUpdate = () => {
-    if (hasAccess) {
-      return; //Skip time limit check if the user is registered
-    }
-
-    const currentTime = videoRef.current.currentTime;
-
-    if (currentTime >= 600) {
-      // 10 minutes limits
-      videoRef.current.pause();
-      setHasAccess(false);
-      showRegisterPrompt();
-    }
-  };
-
-  const showRegisterPrompt = () => {
-    // Show a prompt or modal to register for the course
-    alert(
-      'You have reached the 10-minute free limit. Please register to continue watching.'
-    );
-  };
-
-  const handleResumeVideo = () => {
-    if (isRegistered) {
-      setHasAccess(true);
-      videoRef.current.play();
-    } else {
-      alert('Please register first to continue watching the video.');
-      onRegister();
-    }
-  };
+  // useEffect(() => {
+  //   setHasAccess(isRegistered);
+  // }, [isRegistered]);
 
   return (
-    <div>
-      {hasAccess ? (
-        <video
-          ref={videoRef}
-          src={videoLink}
-          title='Course Video'
-          controls
-          onTimeUpdate={handleTimeUpdate}
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-        />
-      ) : (
-        <div>
-          <p>
-            Your free 10‑minute trial has ended. Please register to continue.
+    <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <video
+        ref={videoRef}
+        src={videoLink}
+        title='Course Video'
+        controls
+        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        allowFullScreen
+        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+
+      {!isRegistered && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            background: 'rgba(0, 127, 128, 0.6)', // More transparent version of #007F80
+            backdropFilter: 'blur(2px)',
+            padding: '15px',
+            borderRadius: '5px',
+            color: 'white',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+            maxWidth: '300px',
+          }}
+        >
+          <p style={{ margin: '0' }}>
+            This is a preview version. Please register to access the full
+            course.
           </p>
-          <button onClick={handleResumeVideo}>Resume Video</button>
         </div>
       )}
     </div>

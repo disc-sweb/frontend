@@ -81,50 +81,50 @@ const VideoContainer = styled.div`
   }
 `;
 
-const VideoPlaceholder = styled.div`
-  background-color: #f0f0f0;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 8px;
-  display: flex;
-  align-items: center; // Vertical center
-  justify-content: center; // Horizontal center
+// const VideoPlaceholder = styled.div`
+//   background-color: #f0f0f0;
+//   width: 100%;
+//   max-width: 800px;
+//   margin: 0 auto;
+//   border-radius: 8px;
+//   display: flex;
+//   align-items: center; // Vertical center
+//   justify-content: center; // Horizontal center
 
-  height: 500px;
+//   height: 500px;
 
-  @media (max-width: 1024px) {
-    height: 400px;
-  }
+//   @media (max-width: 1024px) {
+//     height: 400px;
+//   }
 
-  @media (max-width: 768px) {
-    height: 300px;
-  }
+//   @media (max-width: 768px) {
+//     height: 300px;
+//   }
 
-  @media (max-width: 480px) {
-    height: 200px;
-  }
-`;
+//   @media (max-width: 480px) {
+//     height: 200px;
+//   }
+// `;
 
-const PlayButton = styled.div`
-  width: 60px;
-  height: 60px;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// const PlayButton = styled.div`
+//   width: 60px;
+//   height: 60px;
+//   background-color: rgba(0, 0, 0, 0.6);
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  &::before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-left: 15px solid white;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-  }
-`;
+//   &::before {
+//     content: '';
+//     display: block;
+//     width: 0;
+//     height: 0;
+//     border-left: 15px solid white;
+//     border-top: 10px solid transparent;
+//     border-bottom: 10px solid transparent;
+//   }
+// `;
 
 const CourseInfo = styled.div`
   display: flex;
@@ -190,30 +190,26 @@ const CourseDetail = () => {
   // State to store course data and  user course data
   const [courseData, setCourseData] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [userCourseData, setUserCourseData] = useState(null);
+  // const [userCourseData, setUserCourseData] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
 
   // State for loading status
-  const [loading, setLoading] = useState(true);
+  const [courseLoading, setCourseLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const token = localStorage.getItem('authToken');
 
   // Fetch course data based on the ID
   useEffect(() => {
     // Simulated API call for demonstration
     const fetchCourse = async () => {
       try {
-        const backendUrl =
-          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-
-        const token = localStorage.getItem('authToken');
-        if (!token) {
-          console.warn('No token found. User may not be logged in.');
-          setLoading(false);
-          return;
-        }
+        if (!token) throw new Error('User not logged in.');
 
         const response = await fetch(`${backendUrl}/courses/${courseId}`, {
-          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -225,36 +221,26 @@ const CourseDetail = () => {
         }
         const data = await response.json();
         setCourseData(data);
+        console.log('Course data:', data);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError(error.message);
       } finally {
-        setLoading(false);
+        setCourseLoading(false);
       }
     };
 
     fetchCourse();
-  }, [courseId]);
+  }, [courseId, token, backendUrl]);
 
   // Fetch User Id from the backend
   useEffect(() => {
     // Simulated API call for demonstration
     const fetchUserId = async () => {
       try {
-        const backendUrl =
-          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-
-        const token = localStorage.getItem('authToken');
-
-        if (!token) {
-          console.log('User token', token);
-          console.warn('User not logged in.');
-          setLoading(false);
-          return;
-        }
+        if (!token) throw new Error('User not logged in.');
 
         const response = await fetch(`${backendUrl}/auth/me`, {
-          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -263,71 +249,64 @@ const CourseDetail = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch user');
         }
-        const meData = await response.json();
-        console.log('User data:', meData);
-        setUserId(meData.id);
+        const data = await response.json();
+        setUserId(data.id);
       } catch (error) {
         console.error('Error fetching user:', error);
         setError(error.message);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchUserId();
-  }, []);
+  }, [backendUrl, token]);
 
-  // Get User Id
+  // Get User Couse Data from the backend
   useEffect(() => {
     // Simulated API call for demonstration
-    const fetchUserCourse = async () => {
+    const fetchUserCourses = async () => {
+      if (!userId) return;
       try {
-        const backendUrl =
-          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-
-        const userToken = localStorage.getItem('authToken');
-
-        if (!userToken) {
-          console.log('User token', userToken);
-          console.warn('User not logged in.');
-          setLoading(false);
-          return;
-        }
-        const userResponse = await fetch(
-          `${backendUrl}/courses/getUserCourses`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${userToken}`,
-            },
-            body: JSON.stringify({ userId }),
-          }
-        );
-        if (!userResponse.ok) {
+        const response = await fetch(`${backendUrl}/courses/getUserCourses`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ userId }),
+        });
+        if (!response.ok) {
           throw new Error('Failed to fetch user courses');
         }
-        const userData = await userResponse.json();
-        console.log('User course data:', userData);
-        setUserCourseData(userData);
+        const data = await response.json();
+        console.log('User course data:', data);
+
+        const courseIds = data
+          .map((entry) => entry.courses?.id) // optional chaining to avoid crash if null
+          .filter(Boolean) // remove undefined/null
+          .map((id) => String(id)); // normalize to strings
+
+        // Compare courseId from URL (string) with the IDs from backend
+        const registered = courseIds.includes(String(courseId));
+        console.log('User Courses:', courseIds);
+        setIsRegistered(registered);
       } catch (error) {
         console.error('Error fetching user courses:', error);
         setError(error.message);
       } finally {
-        setLoading(false);
+        setUserLoading(false);
       }
     };
 
-    fetchUserCourse();
-  }, []);
+    fetchUserCourses();
+  }, [userId, backendUrl, courseId, token]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     navigate('/NotFound');
-  //   }
-  // }, [error, navigate]);
+  useEffect(() => {
+    if (error) {
+      navigate('/NotFound');
+    }
+  }, [error, navigate]);
 
-  if (loading) {
+  if (courseLoading || userLoading) {
     return (
       <CourseDetailContainer>
         <BackButtonContainer>
@@ -346,37 +325,12 @@ const CourseDetail = () => {
     return null;
   }
 
-  // Check if the user is registered for the course from the backend
-  const hasAccess = (userCourseData, courseId) => {
-    // Check if the user is registered for the course
-    return (
-      Array.isArray(userCourseData) &&
-      userCourseData.some((entry) => entry.course_id === courseId)
-    );
-  };
-
-  if (hasAccess(userCourseData, courseId)) {
-    setIsRegistered(true);
-    console.log('User is registered for the course');
-  }
-
-  // Need to Update for it to actually do stuff (check if video is in user information from backend)
-  // Simulated registration logic
-  // Need to do 2 Things:
-  // loop through videos to check if user is regsitered to the course
-  // if not registered:
-  // 1. navigate to the place for them to regsiter
-  // 2. update the state to show that they are registered
-  // Give them access to the video
-  // Change the button to "Registered"
+  // Check if the user is registered for the course
   const handleRegister = () => {
-    if (hasAccess(userCourseData, courseId)) {
-      setIsRegistered(true);
-      return;
-    } else {
-      //navigate('/register'); //work in process (need a regiuster page)
-      alert('You have successfully registered for this course!');
-    }
+    if (isRegistered) return;
+    navigate('/register'); // Redirect to registration page
+    alert('You have successfully registered for this course!');
+    setIsRegistered(true); // Simulated registration — replace with real API
   };
 
   return (
@@ -390,20 +344,17 @@ const CourseDetail = () => {
 
         <ContentWrapper>
           <VideoContainer>
-            {courseData.video_link ? (
-              <VideoPlayer
-                videoLink='{courseData.video_link}'
-                isRegistered={isRegistered}
-                onRegister={handleRegister}
-                src={courseData.video_link}
-                title='Course Video'
-                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              />
-            ) : (
-              <VideoPlaceholder>
-                <PlayButton />
-              </VideoPlaceholder>
-            )}
+            <VideoPlayer
+              videoLink={
+                isRegistered
+                  ? courseData.video_link
+                  : courseData.restricted_video_link
+              }
+              isRegistered={isRegistered}
+              src={courseData.video_link}
+              title='Course Video'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            />
           </VideoContainer>
 
           <CourseInfo>

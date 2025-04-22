@@ -85,6 +85,32 @@ const CoursesStyling = styled.div`
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
+  //sample courses for now to test frontend
+  const sampleCourses = [
+    {
+      id: 1,
+      title: 'React for Beginners',
+      class_duration: '4 weeks',
+      price: 49.99,
+      description: 'Learn the basics of React, including components and hooks.',
+    },
+    {
+      id: 2,
+      title: 'Advanced JavaScript',
+      class_duration: '6 weeks',
+      price: 79.99,
+      description: 'Deep dive into closures, async/await, and ES6+ features.',
+    },
+    {
+      id: 3,
+      title: 'UI Design Principles',
+      class_duration: '3 weeks',
+      price: 59.99,
+      description:
+        'Create stunning, accessible interfaces using Figma and CSS.',
+    },
+  ];
+
   useEffect(() => {
     // Fetch data from the backend
     const fetchData = async () => {
@@ -100,6 +126,11 @@ const Courses = () => {
     };
 
     fetchData();
+  }, []);
+
+  //sample courses for now to test frontend
+  useEffect(() => {
+    setCourses(sampleCourses);
   }, []);
 
   return (

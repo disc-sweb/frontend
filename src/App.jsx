@@ -17,6 +17,7 @@ import SignUp from 'pages/account/SignUp';
 import CourseConfirmation from 'pages/courses/CourseConfirmation';
 import CourseDetail from 'pages/courses/CourseDetail';
 import Courses from 'pages/courses/Courses';
+import Register from 'pages/courses/Register';
 import Home from 'pages/home/Home';
 import NotFound from 'pages/not-found/NotFound';
 
@@ -43,6 +44,7 @@ export default function App() {
             <Route path='auth/reset-password' element={<ResetPassword />} />
             <Route path='courses' element={<Courses />} />
             <Route path='courses/:courseId' element={<CourseDetail />} />
+            <Route path='courses/:courseId/register' element={<Register />} />
             <Route
               path='courses/:courseId/confirmation'
               element={<CourseConfirmation />}

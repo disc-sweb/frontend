@@ -42,8 +42,8 @@ export default function App() {
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
             <Route path='courses' element={<Courses />} />
-            <Route path='coursedetail' element={<CourseDetail />} />
-            <Route path='register/:courseId' element={<Register />} />
+            <Route path='courses/:courseId' element={<CourseDetail />} />
+            <Route path='courses/:courseId/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
             <Route path='test' element={<TestPage />} />
           </Route>

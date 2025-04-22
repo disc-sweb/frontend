@@ -93,7 +93,7 @@ const CourseCard = ({
   const navigate = useNavigate();
 
   const handleGoToCourse = () => {
-    navigate(`/register/${course_id}`);
+    navigate(`/courses/${course_id}`);
   };
 
   return (

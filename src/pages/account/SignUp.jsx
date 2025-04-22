@@ -96,13 +96,13 @@ export default function SignUp() {
           {error && <div className='text-red-500 mb-4'>{error}</div>}
           <Input.Text
             title='FULL NAME'
-            placeholder='John'
+            placeholder='John Smith'
             value={formState.fullname}
             onChange={handleChangeFullname}
           />
           <Input.Text
             title='EMAIL'
-            placeholder='j@example.com'
+            placeholder='js@example.com'
             value={formState.email}
             onChange={handleChangeEmail}
             required

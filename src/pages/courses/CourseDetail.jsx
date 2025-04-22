@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
+import { useUser } from 'common/contexts/UserContext';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -188,9 +189,8 @@ const CourseDetail = () => {
   const navigate = useNavigate();
 
   // State to store course data and  user course data
+  const userId = useUser().user?.id;
   const [courseData, setCourseData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  // const [userCourseData, setUserCourseData] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
 
   // State for loading status
@@ -233,38 +233,15 @@ const CourseDetail = () => {
     fetchCourse();
   }, [courseId, token, backendUrl]);
 
-  // Fetch User Id from the backend
-  useEffect(() => {
-    // Simulated API call for demonstration
-    const fetchUserId = async () => {
-      try {
-        if (!token) throw new Error('User not logged in.');
-
-        const response = await fetch(`${backendUrl}/auth/me`, {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch user');
-        }
-        const data = await response.json();
-        setUserId(data.id);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        setError(error.message);
-      }
-    };
-
-    fetchUserId();
-  }, [backendUrl, token]);
-
   // Get User Couse Data from the backend
   useEffect(() => {
     // Simulated API call for demonstration
     const fetchUserCourses = async () => {
-      if (!userId) return;
+      if (!userId) {
+        setIsRegistered(false);
+        setUserLoading(false);
+        return;
+      }
       try {
         const response = await fetch(`${backendUrl}/courses/getUserCourses`, {
           method: 'POST',
@@ -328,7 +305,7 @@ const CourseDetail = () => {
   // Check if the user is registered for the course
   const handleRegister = () => {
     if (isRegistered) return;
-    navigate('/register'); // Redirect to registration page
+    navigate(`/courses/${courseId}/register`); // Redirect to registration page
     alert('You have successfully registered for this course!');
     setIsRegistered(true); // Simulated registration — replace with real API
   };

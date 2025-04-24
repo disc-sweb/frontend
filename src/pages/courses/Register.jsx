@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Footer from 'common/components/footer/Footer';
+
 const RegisterStyling = styled.div`
   min-height: 100vh;
   background-color: #f3e8ff; /* soft purple */
@@ -107,43 +109,46 @@ const Register = () => {
   };
 
   return (
-    <RegisterStyling>
-      <div className='registration-card'>
-        <button className='close-button' onClick={() => navigate('/courses')}>
-          ✕
-        </button>
-        <div className='card-content'>
-          <h2>{course.class_title} Registration</h2>
+    <div>
+      <RegisterStyling>
+        <div className='registration-card'>
+          <button className='close-button' onClick={() => navigate('/courses')}>
+            ✕
+          </button>
+          <div className='card-content'>
+            <h2>{course.class_title} Registration</h2>
 
-          <p>
-            Description: Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Fusce dui felis, malesuada sit amet imperdiet vitae, convallis
-            a ipsum. Nam ornare bibendum felis. Cras ac est eu augue dictum
-            imperdiet sit amet non leo...
-          </p>
+            <p>
+              Description: Lorem ipsum dolor sit amet, consectetur adipiscing
+              elit. Fusce dui felis, malesuada sit amet imperdiet vitae,
+              convallis a ipsum. Nam ornare bibendum felis. Cras ac est eu augue
+              dictum imperdiet sit amet non leo...
+            </p>
 
-          <div>
-            <div className='form-label'>
-              Please fill out the following Google Form to register:
+            <div>
+              <div className='form-label'>
+                Please fill out the following Google Form to register:
+              </div>
+              <a
+                className='form-link'
+                href='https://forms.gle/your-form-link-here'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Google Form Link
+              </a>
             </div>
-            <a
-              className='form-link'
-              href='https://forms.gle/your-form-link-here'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Google Form Link
-            </a>
           </div>
+          <button
+            className='payment-button'
+            onClick={() => alert('Continue to payment')}
+          >
+            Continue to Payment
+          </button>
         </div>
-        <button
-          className='payment-button'
-          onClick={() => alert('Continue to payment')}
-        >
-          Continue to Payment
-        </button>
-      </div>
-    </RegisterStyling>
+      </RegisterStyling>
+      <Footer />
+    </div>
   );
 };
 

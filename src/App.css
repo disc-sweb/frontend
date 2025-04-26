@@ -12,7 +12,6 @@
   color: var(--text);
 }
 
-
 button {
   font-family: inherit;
 }
@@ -38,7 +37,6 @@ button {
   font-family: 'NotoSansBold';
   src: url('fonts/NotoSans-Bold.ttf') format('truetype');
 }
-
 
 @font-face {
   font-family: 'AcuminPro';

@@ -26,7 +26,6 @@ export default function Home() {
 
   return (
     <HomePage>
-
       <SectionComponent
         sectionTitle='Welcome to our Training Academy - Where We Are Empowering Change Through Education!'
         titleSize={48}

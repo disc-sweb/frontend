@@ -36,7 +36,6 @@ const SectionComponent = ({
           </div>
           <div className='section-descript'>
             {sectionDescript.map((paragraph, index) => (
-
               <p key={index} style={{ textAlign: sectionAlign }}>
                 {paragraph}
               </p>

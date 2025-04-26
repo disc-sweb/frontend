@@ -26,7 +26,6 @@ export default function HomeDoulaProgram() {
   return (
     <div>
       <div className='text-container'>
-
         <div className='academy-description'>
           <p className='academy-description-text'>
             Sokana Collective&apos;s Training Academy offers comprehensive

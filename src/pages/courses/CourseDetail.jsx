@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
-import { useUser } from 'common/contexts/UserContext';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -218,6 +217,7 @@ const CourseDetail = () => {
         }
         const data = await response.json();
         console.log('response: ', data);
+        setIsRegistered(data.video_link);
         setCourseData(data);
       } catch (error) {
         console.error('Error fetching data:', error);

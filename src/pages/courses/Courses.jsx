@@ -83,7 +83,6 @@ const CoursesStyling = styled.div`
 `;
 
 const Courses = () => {
-  const [courses, setCourses] = useState([]);
   const [userCourses, setUserCourses] = useState([]);
   const [nonUserCourses, setNonUserCourses] = useState([]);
 

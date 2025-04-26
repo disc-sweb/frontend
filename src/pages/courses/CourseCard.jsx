@@ -89,16 +89,21 @@ const CourseCard = ({
   course_duration,
   course_price,
   course_description,
+  course_image,
 }) => {
   const navigate = useNavigate();
-
+  console.log('Course ID:', `/courses/${course_id}`);
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
   };
 
   return (
     <StyledComponent>
-      <div className='card-image'></div>
+      <img
+        className='card-image'
+        src={course_image}
+        alt={`Cover for ${course_title}`}
+      />
       <div className='card-content'>
         <h3 className='card-title'>{course_title}</h3>
         <p className='card-duration'>{course_duration}</p>
@@ -118,6 +123,7 @@ CourseCard.propTypes = {
   course_duration: PropTypes.string.isRequired,
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
+  course_image: PropTypes.string.isRequired,
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',

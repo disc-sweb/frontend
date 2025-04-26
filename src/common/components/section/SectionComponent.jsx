@@ -53,6 +53,7 @@ SectionComponent.propTypes = {
   sectionTitle: PropTypes.string.isRequired,
   titleSize: PropTypes.number.isRequired,
   sectionDescript: PropTypes.arrayOf(PropTypes.string),
+
   sectionAlign: PropTypes.string,
   sectionGap: PropTypes.number.isRequired,
   sectionPaddingBot: PropTypes.number.isRequired,

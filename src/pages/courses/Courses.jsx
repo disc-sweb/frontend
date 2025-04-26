@@ -83,54 +83,32 @@ const CoursesStyling = styled.div`
 `;
 
 const Courses = () => {
-  const [courses, setCourses] = useState([]);
-
-  //sample courses for now to test frontend
-  const sampleCourses = [
-    {
-      id: 1,
-      title: 'React for Beginners',
-      class_duration: '4 weeks',
-      price: 49.99,
-      description: 'Learn the basics of React, including components and hooks.',
-    },
-    {
-      id: 2,
-      title: 'Advanced JavaScript',
-      class_duration: '6 weeks',
-      price: 79.99,
-      description: 'Deep dive into closures, async/await, and ES6+ features.',
-    },
-    {
-      id: 3,
-      title: 'UI Design Principles',
-      class_duration: '3 weeks',
-      price: 59.99,
-      description:
-        'Create stunning, accessible interfaces using Figma and CSS.',
-    },
-  ];
+  const [userCourses, setUserCourses] = useState([]);
+  const [nonUserCourses, setNonUserCourses] = useState([]);
 
   useEffect(() => {
     // Fetch data from the backend
     const fetchData = async () => {
       try {
-        const backendUrl =
+        const BACKEND_URL =
           process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
-        const response = await fetch(`${backendUrl}/courses`);
+        const token = localStorage.getItem('authToken');
+        const response = await fetch(`${BACKEND_URL}/courses`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await response.json();
-        setCourses(data);
+        console.log('response: ', data);
+        setUserCourses(data['userCourses']);
+        setNonUserCourses(data['nonUserCourses']);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
-
-  //sample courses for now to test frontend
-  useEffect(() => {
-    setCourses(sampleCourses);
   }, []);
 
   return (
@@ -155,16 +133,30 @@ const Courses = () => {
           </button>
         </div>
         <div className='courses-container'>
-          {courses.map((classData, index) => (
-            <CourseCard
-              key={index}
-              course_id={classData.id}
-              course_title={classData.title}
-              course_duration={classData.class_duration}
-              course_price={classData.price}
-              course_description={classData.description}
-            />
-          ))}
+          {nonUserCourses &&
+            nonUserCourses.map((classData, index) => (
+              <CourseCard
+                key={index}
+                course_id={classData.id}
+                course_title={classData.title}
+                course_duration={'5 hours'}
+                course_price={classData.price}
+                course_description={classData.description}
+                course_image={classData.cover_image_link}
+              />
+            ))}
+          {userCourses &&
+            userCourses.map((classData, index) => (
+              <CourseCard
+                key={index}
+                course_id={classData.id}
+                course_title={classData.title}
+                course_duration={'5 hours'}
+                course_price={classData.price}
+                course_description={classData.description}
+                course_image={classData.cover_image_link}
+              />
+            ))}
         </div>
       </CoursesStyling>
       <Footer />

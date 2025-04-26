@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
-import { useUser } from 'common/contexts/UserContext';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -188,15 +187,11 @@ const CourseDetail = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
 
-  // State to store course data and  user course data
-  const userId = useUser().user?.id;
   const [courseData, setCourseData] = useState(null);
   const [isRegistered, setIsRegistered] = useState(false);
 
   // State for loading status
   const [courseLoading, setCourseLoading] = useState(true);
-  const [userLoading, setUserLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const backendUrl =
     process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
@@ -207,24 +202,25 @@ const CourseDetail = () => {
     // Simulated API call for demonstration
     const fetchCourse = async () => {
       try {
+        const BACKEND_URL =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+        const token = localStorage.getItem('authToken');
         if (!token) throw new Error('User not logged in.');
-
-        const response = await fetch(`${backendUrl}/courses/${courseId}`, {
+        const response = await fetch(`${BACKEND_URL}/courses/${courseId}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
-
         if (!response.ok) {
           throw new Error('Course not found');
         }
         const data = await response.json();
+        console.log('response: ', data);
+        setIsRegistered(data.video_link);
         setCourseData(data);
-        console.log('Course data:', data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError(error.message);
       } finally {
         setCourseLoading(false);
       }
@@ -233,57 +229,7 @@ const CourseDetail = () => {
     fetchCourse();
   }, [courseId, token, backendUrl]);
 
-  // Get User Couse Data from the backend
-  useEffect(() => {
-    // Simulated API call for demonstration
-    const fetchUserCourses = async () => {
-      if (!userId) {
-        setIsRegistered(false);
-        setUserLoading(false);
-        return;
-      }
-      try {
-        const response = await fetch(`${backendUrl}/courses/getUserCourses`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ userId }),
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch user courses');
-        }
-        const data = await response.json();
-        console.log('User course data:', data);
-
-        const courseIds = data
-          .map((entry) => entry.courses?.id) // optional chaining to avoid crash if null
-          .filter(Boolean) // remove undefined/null
-          .map((id) => String(id)); // normalize to strings
-
-        // Compare courseId from URL (string) with the IDs from backend
-        const registered = courseIds.includes(String(courseId));
-        console.log('User Courses:', courseIds);
-        setIsRegistered(registered);
-      } catch (error) {
-        console.error('Error fetching user courses:', error);
-        setError(error.message);
-      } finally {
-        setUserLoading(false);
-      }
-    };
-
-    fetchUserCourses();
-  }, [userId, backendUrl, courseId, token]);
-
-  useEffect(() => {
-    if (error) {
-      navigate('/NotFound');
-    }
-  }, [error, navigate]);
-
-  if (courseLoading || userLoading) {
+  if (courseLoading) {
     return (
       <CourseDetailContainer>
         <BackButtonContainer>
@@ -305,9 +251,12 @@ const CourseDetail = () => {
   // Check if the user is registered for the course
   const handleRegister = () => {
     if (isRegistered) return;
-    navigate(`/courses/${courseId}/register`); // Redirect to registration page
-    alert('You have successfully registered for this course!');
-    setIsRegistered(true); // Simulated registration — replace with real API
+    navigate(`/courses/${courseId}/register`, {
+      state: {
+        referrer: '/course/id',
+        extraData: courseData,
+      },
+    }); // Redirect to registration page
   };
 
   return (
@@ -323,13 +272,10 @@ const CourseDetail = () => {
           <VideoContainer>
             <VideoPlayer
               videoLink={
-                isRegistered
-                  ? courseData.video_link
-                  : courseData.restricted_video_link
+                courseData.video_link || courseData.restricted_video_link
               }
-              isRegistered={isRegistered}
-              src={courseData.video_link}
-              title='Course Video'
+              isRegistered={courseData.video_link}
+              title={courseData.title}
               allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
             />
           </VideoContainer>
@@ -343,7 +289,7 @@ const CourseDetail = () => {
             </Description>
 
             {/* Check if the user is registered for the course to show the Register Button */}
-            {!isRegistered && (
+            {!courseData.video_link && (
               <RegisterButton onClick={handleRegister}>
                 Register for this course
               </RegisterButton>

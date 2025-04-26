@@ -88,7 +88,7 @@ export default function Login() {
           <Input.Text
             title='EMAIL'
             name='email'
-            placeholder='jsmith or j@example.com'
+            placeholder='jsmith or js@example.com'
             value={formState.email}
             onChange={handleChange}
             required

@@ -92,7 +92,7 @@ const CourseCard = ({
   course_image,
 }) => {
   const navigate = useNavigate();
-
+  console.log('Course ID:', `/courses/${course_id}`);
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
   };

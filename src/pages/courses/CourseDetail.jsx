@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
+import { useUser } from 'common/contexts/UserContext';
+
+import VideoPlayer from './VideoPlayer';
 
 const CourseDetailContainer = styled.div`
   display: flex;
@@ -59,43 +62,70 @@ const ContentWrapper = styled.div`
 `;
 
 const VideoContainer = styled.div`
-  background-color: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  overflow: hidden;
-  flex: 1;
-  height: 100%;
   width: calc(50% - 10px);
-  min-height: 500px;
+  aspect-ratio: 16 / 9; // Ensures correct video shape
+  overflow: hidden;
+  border-radius: 4px;
 
   @media (max-width: 1200px) {
     width: 100%;
-    min-height: 500px;
+  }
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
   }
 `;
 
-const PlayButton = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+// const VideoPlaceholder = styled.div`
+//   background-color: #f0f0f0;
+//   width: 100%;
+//   max-width: 800px;
+//   margin: 0 auto;
+//   border-radius: 8px;
+//   display: flex;
+//   align-items: center; // Vertical center
+//   justify-content: center; // Horizontal center
 
-  &:before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-left: 20px solid white;
-    margin-left: 5px;
-  }
-`;
+//   height: 500px;
+
+//   @media (max-width: 1024px) {
+//     height: 400px;
+//   }
+
+//   @media (max-width: 768px) {
+//     height: 300px;
+//   }
+
+//   @media (max-width: 480px) {
+//     height: 200px;
+//   }
+// `;
+
+// const PlayButton = styled.div`
+//   width: 60px;
+//   height: 60px;
+//   background-color: rgba(0, 0, 0, 0.6);
+//   border-radius: 50%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+//   &::before {
+//     content: '';
+//     display: block;
+//     width: 0;
+//     height: 0;
+//     border-left: 15px solid white;
+//     border-top: 10px solid transparent;
+//     border-bottom: 10px solid transparent;
+//   }
+// `;
 
 const CourseInfo = styled.div`
   display: flex;
@@ -156,12 +186,17 @@ const RegisterButton = styled.button`
 const CourseDetail = () => {
   // Get the courseId parameter from the URL
   const { courseId } = useParams();
+  const navigate = useNavigate();
 
-  // State to store course data
   const [courseData, setCourseData] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   // State for loading status
-  const [loading, setLoading] = useState(true);
+  const [courseLoading, setCourseLoading] = useState(true);
+
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const token = localStorage.getItem('authToken');
 
   // Fetch course data based on the ID
   useEffect(() => {
@@ -171,37 +206,30 @@ const CourseDetail = () => {
         const BACKEND_URL =
           process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
         const token = localStorage.getItem('authToken');
+        if (!token) throw new Error('User not logged in.');
         const response = await fetch(`${BACKEND_URL}/courses/${courseId}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
         });
+        if (!response.ok) {
+          throw new Error('Course not found');
+        }
         const data = await response.json();
         console.log('response: ', data);
         setCourseData(data);
-
-
-        // Mock data - replace with actual API call
-        const mockCourseData = {
-          id: courseId,
-          title: 'Course Title',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce dui felis, malesuada sit amet imperdiet vitae, convallis a ipsum. Nam ornare bibendum felis. Cras ac est eu augue dictum imperdiet sit amet non leo. Cras auctor commodo odio semper blandit. Ut felis nulla, scelerisque eget suscipit nec, mattis in turpis.',
-        };
-
-        //setCourseData(mockCourseData);
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching data:', error);
       } finally {
-        setLoading(false);
+        setCourseLoading(false);
       }
     };
 
     fetchCourse();
-  }, [courseId]);
+  }, [courseId, token, backendUrl]);
 
-  if (loading) {
+  if (courseLoading) {
     return (
       <CourseDetailContainer>
         <BackButtonContainer>
@@ -216,6 +244,21 @@ const CourseDetail = () => {
     );
   }
 
+  if (!courseData) {
+    return null;
+  }
+
+  // Check if the user is registered for the course
+  const handleRegister = () => {
+    if (isRegistered) return;
+    navigate(`/courses/${courseId}/register`, {
+      state: {
+        referrer: '/course/id',
+        extraData: courseData,
+      },
+    }); // Redirect to registration page
+  };
+
   return (
     <div>
       <CourseDetailContainer>
@@ -227,18 +270,14 @@ const CourseDetail = () => {
 
         <ContentWrapper>
           <VideoContainer>
-            {courseData.video_link ? (
-              <video
-                controls
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                src={courseData.video_link}
-              >
-                Your browser doesn’t support HTML5 video.
-              </video>
-            ) : (
-              <div>No video available</div>
-            )}
-
+            <VideoPlayer
+              videoLink={
+                courseData.video_link || courseData.restricted_video_link
+              }
+              isRegistered={courseData.video_link}
+              title={courseData.title}
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            />
           </VideoContainer>
 
           <CourseInfo>
@@ -249,7 +288,12 @@ const CourseDetail = () => {
               <p>{courseData.description}</p>
             </Description>
 
-            <RegisterButton>Register for this course</RegisterButton>
+            {/* Check if the user is registered for the course to show the Register Button */}
+            {!courseData.video_link && (
+              <RegisterButton onClick={handleRegister}>
+                Register for this course
+              </RegisterButton>
+            )}
           </CourseInfo>
         </ContentWrapper>
       </CourseDetailContainer>

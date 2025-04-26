@@ -54,7 +54,6 @@ const Text = styled.p`
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   margin: ${(props) => props.margin};
-
 `;
 
 const Img = styled.img`

@@ -96,9 +96,8 @@ const CourseCard = ({
   const navigate = useNavigate();
 
   //admin state for displaying edit/delete course
-  const [isAdmin, setIsAdmin] = useState(true);
-  //might change based on where infromation is stored or if additional
-  //API call is needed
+  const [isAdmin, setIsAdmin] = useState(false);
+  //might change based on where infromation is stored or if additional calls needed
   useEffect(() => {
     // Example: check if user is admin
     const userRole = localStorage.getItem('userRole');

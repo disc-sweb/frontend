@@ -1,6 +1,6 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Footer from 'common/components/footer/Footer';
@@ -86,6 +86,8 @@ const Courses = () => {
   const [userCourses, setUserCourses] = useState([]);
   const [nonUserCourses, setNonUserCourses] = useState([]);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Fetch data from the backend
     const fetchData = async () => {
@@ -116,7 +118,10 @@ const Courses = () => {
       <CoursesStyling>
         <div className='header-container'>
           <h1>Courses</h1>
-          <button className='add-course-button'>
+          <button
+            className='add-course-button'
+            onClick={() => navigate('/upload')}
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'

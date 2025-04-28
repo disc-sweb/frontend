@@ -38,6 +38,35 @@ export const StyledInput = styled.input`
   }
 `;
 
+export const StyledTextArea = styled.textarea`
+  height: 200px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #474747;
+  border-radius: 8px;
+  padding: 8px;
+  background-color: transparent;
+  color: #333;
+
+  &::placeholder {
+    color: #aaa;
+  }
+`;
+
+export const StyledFileInput = styled.div`
+  height: 200px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px dashed #474747;
+  border-radius: 8px;
+  background-color: ${(props) => (props.hasFile ? 'white' : '#F4F4EF')};
+  color: #474747;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const PasswordContainer = styled.div`
   position: relative;
   width: 100%;

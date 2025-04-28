@@ -45,6 +45,7 @@ export default function Login() {
   const { login, googleAuth } = useUser();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormComplete, setIsFormComplete] = useState(false);
 
   const [formState, setFormState] = useState({
     email: '',
@@ -52,8 +53,14 @@ export default function Login() {
   });
 
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    const updatedFormState = { ...formState, [e.target.name]: e.target.value };
+    setFormState(updatedFormState);
     setError('');
+
+    const isComplete = Object.values(updatedFormState).every(
+      (value) => value.trim() !== ''
+    );
+    setIsFormComplete(isComplete);
   };
 
   const handleSubmit = async (e) => {
@@ -101,7 +108,7 @@ export default function Login() {
             required
           />
           <StyledLink to='/forgot-password'>I FORGOT MY PASSWORD</StyledLink>
-          <SubmitButton disabled={isLoading}>
+          <SubmitButton disabled={isLoading || !isFormComplete}>
             {isLoading ? 'Logging in...' : 'Log In'}
           </SubmitButton>
           <GoogleButton

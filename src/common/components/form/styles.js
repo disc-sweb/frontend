@@ -60,6 +60,13 @@ export const StyledButton = styled(Button.Primary)`
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #474747;
-  color: #ffffff;
+  background-color: ${(props) =>
+    props.disabled ? '#474747' : props.ascancel ? '#832D2D' : '#006464'};
+  color: 'var(--white)';
+  transtion: hover 0.3s ease-in-out;
+  &:hover {
+    background-color: ${(props) =>
+      !props.disabled && (props.ascancel ? '#772828' : '#005151')};
+    cursor: ${(props) => props.disabled && 'not-allowed'};
+  }
 `;

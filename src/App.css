@@ -23,6 +23,11 @@ button {
 }
 
 @font-face {
+  font-family: 'PoppinsRegular';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'PoppinsMedium';
   src: url('fonts/Poppins-Medium.ttf') format('truetype');
 }

@@ -1,45 +1,17 @@
 import React, { useState } from 'react';
 
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Form, FormTitle } from 'common/components/form/Form';
+import { StyledButton } from 'common/components/form/styles.js';
 import { useUser } from 'common/contexts/UserContext';
 
-const Container = styled.div`
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
+import { StyledLinkCenter, StyledPage } from './styles';
 
 const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-`;
-
-const Button = styled.button`
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
 `;
 
 const ErrorMessage = styled.div`
@@ -56,23 +28,6 @@ const SuccessMessage = styled.div`
   padding: 10px;
   border-radius: 4px;
   background-color: #edf7ed;
-`;
-
-const StyledLink = styled(Link)`
-  color: #007bff;
-  text-decoration: none;
-  text-align: center;
-  margin-top: 10px;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Title = styled.h2`
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
 `;
 
 export default function RequestPasswordReset() {
@@ -98,10 +53,14 @@ export default function RequestPasswordReset() {
   };
 
   return (
-    <Container>
-      <Title>Reset Password</Title>
+    <StyledPage>
       {!success ? (
         <Form onSubmit={handleSubmit}>
+          <FormTitle>Reset Password</FormTitle>
+          <p>
+            Enter the email address you used for your account and we’ll send you
+            instructions to reset your password.
+          </p>
           <Input
             type='email'
             placeholder='Enter your email'
@@ -110,11 +69,11 @@ export default function RequestPasswordReset() {
             required
             autoComplete='email'
           />
-          <Button type='submit' disabled={isLoading}>
+          <StyledButton type='submit' disabled={isLoading}>
             {isLoading ? 'Sending...' : 'Reset Password'}
-          </Button>
+          </StyledButton>
           {error && <ErrorMessage>{error}</ErrorMessage>}
-          <StyledLink to='/login'>Back to Login</StyledLink>
+          <StyledLinkCenter to='/login'>BACK TO LOGIN</StyledLinkCenter>
         </Form>
       ) : (
         <div>
@@ -124,9 +83,9 @@ export default function RequestPasswordReset() {
             If you don&apos;t receive the email within a few minutes, please
             check your spam folder.
           </SuccessMessage>
-          <StyledLink to='/login'>Back to Login</StyledLink>
+          <StyledLinkCenter to='/login'>BACK TO LOGIN</StyledLinkCenter>
         </div>
       )}
-    </Container>
+    </StyledPage>
   );
 }

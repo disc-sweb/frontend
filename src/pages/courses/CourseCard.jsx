@@ -123,7 +123,6 @@ const CourseCard = ({
     }
   }, []);
 
-
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
   };

@@ -83,8 +83,7 @@ const CoursesStyling = styled.div`
 `;
 
 const Courses = () => {
-
-  const [courses, setCourses] = useState([]);
+  // const [courses, setCourses] = useState([]);
 
   // sample courses for now to test frontend
   // const sampleCourses = [
@@ -115,7 +114,6 @@ const Courses = () => {
   const [userCourses, setUserCourses] = useState([]);
   const [nonUserCourses, setNonUserCourses] = useState([]);
 
-
   useEffect(() => {
     // Fetch data from the backend
     const fetchData = async () => {
@@ -132,12 +130,11 @@ const Courses = () => {
         const data = await response.json();
 
         console.log('courses data: ', data);
-        setCourses(data);
+        // setCourses(data);
 
         console.log('response: ', data);
         setUserCourses(data['userCourses']);
         setNonUserCourses(data['nonUserCourses']);
-
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -146,12 +143,10 @@ const Courses = () => {
     fetchData();
   }, []);
 
-
   // sample courses for now to test frontend
   // useEffect(() => {
   //   setCourses(sampleCourses);
   // }, [sampleCourses]);
-
 
   return (
     <div>

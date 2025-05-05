@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import GoogleButton from 'common/components/GoogleButton';
 import { Form, FormTitle } from 'common/components/form/Form';
@@ -10,35 +9,7 @@ import SubmitButton from 'common/components/form/SubmitButton';
 import { RedSpan } from 'common/components/form/styles';
 import { useUser } from 'common/contexts/UserContext';
 
-import { StyledForm, StyledPage } from './styles';
-
-const StyledLink = styled(Link)`
-  color: #007bff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  align-self: flex-start;
-  font-family: 'PoppinsMedium';
-  color: #007575;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const StyledLinkCenter = styled(Link)`
-  color: #007bff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  align-self: center;
-  font-family: 'PoppinsMedium';
-  color: #007575;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+import { StyledForm, StyledLink, StyledLinkCenter, StyledPage } from './styles';
 
 export default function Login() {
   const navigate = useNavigate();

@@ -5,11 +5,7 @@ import styled from 'styled-components';
 
 import { useUser } from 'common/contexts/UserContext';
 
-const Container = styled.div`
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-`;
+import { StyledPage } from './styles';
 
 const Form = styled.form`
   display: flex;
@@ -202,7 +198,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <Container>
+    <StyledPage>
       <h2>Set New Password</h2>
       <Form onSubmit={handleSubmit}>
         <PasswordContainer>
@@ -234,6 +230,6 @@ export default function ResetPassword() {
         </Button>
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </Form>
-    </Container>
+    </StyledPage>
   );
 }

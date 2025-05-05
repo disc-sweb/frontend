@@ -1,4 +1,5 @@
 import 'App.css';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button } from 'common/components/Button';
@@ -55,4 +56,32 @@ export const StyledButton = styled(Button.Primary)`
   padding-right: 30px;
   margin-left: auto;
   margin-right: auto;
+`;
+
+export const StyledLink = styled(Link)`
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  align-self: flex-start;
+  font-family: 'PoppinsMedium';
+  color: #007575;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const StyledLinkCenter = styled(Link)`
+  color: #007bff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  align-self: center;
+  font-family: 'PoppinsMedium';
+  color: #007575;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;

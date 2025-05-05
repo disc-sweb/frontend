@@ -92,7 +92,6 @@ const StyledComponent = styled.div`
     font-size: 1.5rem;
   }
 
-
   .admin-controls button.edit svg {
     fill: green;
   }

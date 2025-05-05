@@ -108,8 +108,10 @@ const CourseCard = ({
   course_duration,
   course_price,
   course_description,
+  course_image,
 }) => {
   const navigate = useNavigate();
+  console.log('Course ID:', `/courses/${course_id}`);
 
   //admin state for displaying edit/delete course
   const [isAdmin, setIsAdmin] = useState(true);
@@ -121,6 +123,7 @@ const CourseCard = ({
       setIsAdmin(true);
     }
   }, []);
+
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -138,7 +141,11 @@ const CourseCard = ({
 
   return (
     <StyledComponent>
-      <div className='card-image'></div>
+      <img
+        className='card-image'
+        src={course_image}
+        alt={`Cover for ${course_title}`}
+      />
       <div className='card-content'>
         <div
           style={{
@@ -179,6 +186,7 @@ CourseCard.propTypes = {
   course_duration: PropTypes.string.isRequired,
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
+  course_image: PropTypes.string.isRequired,
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',

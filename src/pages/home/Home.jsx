@@ -34,7 +34,6 @@ export default function Home() {
           'Our training academy offers a diverse array of classes, meticulously crafted to cater to every aspect of doula practice. From prenatal education and labor support techniques to postpartum care and lactation consulting, our curriculum is designed to empower you with the skills and knowledge needed to confidently guide families through their unique fertility, birthing journeys, and beyond.',
           'Led by experienced instructors and rooted in a deep reverence for the birthing process, our training programs emphasize the importance of cultural sensitivity, inclusivity, and compassionate care. Join our community of passionate individuals dedicated to nurturing a supportive and empowering environment for expectant people and families.',
         ]}
-        sectionAlign={'left'}
         sectionGap={72}
         sectionPaddingBot={128}
         backgroundColor='#FBE9FD'

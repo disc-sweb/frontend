@@ -96,8 +96,7 @@ export default function CourseConfirmation() {
         <h1>
           You have successfully signed up for {course.title}
           {/*Only shows the line below if course type includes 'Online'*/}
-          {course.course_type?.includes('Online') &&
-            ` at ${course.dateTime}`}!{' '}
+          {course.course_type?.includes('Online') && ` at 09/19/25`}!{' '}
         </h1>
         <ConfirmText>
           We have sent an email confirming the registration. Thank you!

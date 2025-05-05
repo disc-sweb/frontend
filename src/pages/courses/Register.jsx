@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+
+import Footer from 'common/components/footer/Footer';
 
 const RegisterStyling = styled.div`
   min-height: 100vh;
@@ -97,53 +99,75 @@ const RegisterStyling = styled.div`
 const Register = () => {
   // const { classId } = useParams();
   const navigate = useNavigate();
+  const { courseId } = useParams();
 
-  // const handlePaymentClick = () => {
-  //   // open Stripe?
-  // };
-  const course = {
-    class_title: 'Mock Class: Intro to Web Magic',
-    description: 'Learn how to charm the DOM and conjure layouts.',
+  const { state } = useLocation();
+
+  const handleRegister = async () => {
+    try {
+      console.log('Registering for course...');
+      const BACKEND_URL =
+        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      const token = localStorage.getItem('authToken');
+
+      const res = await fetch(
+        `${BACKEND_URL}/courses/purchaseCourse/${courseId}`, // no stray apostrophes!
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const { url } = await res.json();
+
+      if (!url) {
+        throw new Error('No checkout URL returned');
+      }
+
+      // 3️⃣ Redirect the browser straight to Stripe Checkout
+      window.location.href = url;
+    } catch (err) {
+      console.error('Purchase error:', err);
+      // show a user-friendly notification...
+    }
   };
 
+  const course = state.extraData;
   return (
-    <RegisterStyling>
-      <div className='registration-card'>
-        <button className='close-button' onClick={() => navigate('/courses')}>
-          ✕
-        </button>
-        <div className='card-content'>
-          <h2>{course.class_title} Registration</h2>
+    <div>
+      <RegisterStyling>
+        <div className='registration-card'>
+          <button className='close-button' onClick={() => navigate('/courses')}>
+            ✕
+          </button>
+          <div className='card-content'>
+            <h2>{course.title} Course Registration</h2>
 
-          <p>
-            Description: Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Fusce dui felis, malesuada sit amet imperdiet vitae, convallis
-            a ipsum. Nam ornare bibendum felis. Cras ac est eu augue dictum
-            imperdiet sit amet non leo...
-          </p>
+            <p>{course.description}</p>
 
-          <div>
-            <div className='form-label'>
-              Please fill out the following Google Form to register:
+            <div>
+              <div className='form-label'>
+                Please fill out the following Google Form to register:
+              </div>
+              <a
+                className='form-link'
+                href='https://forms.gle/your-form-link-here'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                {course.form_link}
+              </a>
             </div>
-            <a
-              className='form-link'
-              href='https://forms.gle/your-form-link-here'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Google Form Link
-            </a>
           </div>
+          <button className='payment-button' onClick={handleRegister}>
+            Continue to Payment
+          </button>
         </div>
-        <button
-          className='payment-button'
-          onClick={() => alert('Continue to payment')}
-        >
-          Continue to Payment
-        </button>
-      </div>
-    </RegisterStyling>
+      </RegisterStyling>
+      <Footer />
+    </div>
   );
 };
 

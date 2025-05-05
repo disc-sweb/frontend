@@ -29,7 +29,6 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<NavLayout />}>
-            <Route element={<PrivateRoute />}></Route>
             <Route element={<PublicOnlyRoute />}>
               <Route path='login' element={<Login />} />
               <Route path='signup' element={<SignUp />} />
@@ -42,13 +41,17 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path='auth/callback' element={<AuthCallback />} />
             <Route path='auth/reset-password' element={<ResetPassword />} />
+
             <Route path='courses' element={<Courses />} />
-            <Route path='courses/:courseId' element={<CourseDetail />} />
-            <Route path='courses/:courseId/register' element={<Register />} />
-            <Route
-              path='courses/:courseId/confirmation'
-              element={<CourseConfirmation />}
-            />
+            <Route element={<PrivateRoute />}>
+              <Route path='courses/:courseId' element={<CourseDetail />} />
+              <Route path='courses/:courseId/register' element={<Register />} />
+              <Route
+                path='courses/:courseId/confirmation'
+                element={<CourseConfirmation />}
+              />
+            </Route>
+
             <Route path='*' element={<NotFound />} />
             <Route path='test' element={<TestPage />} />
           </Route>

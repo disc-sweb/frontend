@@ -18,6 +18,7 @@ const StyledButton = styled.button`
   justify-content: center;
   gap: 8px;
   transition: all 0.2s ease-in-out;
+  font-family: 'PoppinsRegular';
 
   &:hover {
     background-color: ${(props) => props.hoverBgColor};

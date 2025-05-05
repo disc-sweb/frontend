@@ -85,7 +85,7 @@ const CoursesStyling = styled.div`
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
-  //sample courses for now to test frontend
+  // sample courses for now to test frontend
   // const sampleCourses = [
   //   {
   //     id: 1,
@@ -129,10 +129,10 @@ const Courses = () => {
     fetchData();
   }, []);
 
-  // // sample courses for now to test frontend
+  // sample courses for now to test frontend
   // useEffect(() => {
   //   setCourses(sampleCourses);
-  // }, []);
+  // }, [sampleCourses]);
 
   return (
     <div>

@@ -84,6 +84,22 @@ const StyledComponent = styled.div`
   .card-button:hover {
     background-color: #2180b9;
   }
+
+  .admin-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+
+
+  .admin-controls button.edit svg {
+    fill: green;
+  }
+
+  .admin-controls button.delete svg {
+    fill: red;
+  }
 `;
 
 const CourseCard = ({
@@ -96,7 +112,7 @@ const CourseCard = ({
   const navigate = useNavigate();
 
   //admin state for displaying edit/delete course
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
   //might change based on where infromation is stored or if additional calls needed
   useEffect(() => {
     // Example: check if user is admin
@@ -137,30 +153,12 @@ const CourseCard = ({
               className='admin-controls'
               style={{ display: 'flex', gap: '10px' }}
             >
-              <button
-                onClick={handleEditCourse}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: 'teal',
-                  fontSize: '1.5rem',
-                }}
-              >
-                <FaEdit />
+              <button onClick={handleEditCourse} className='edit'>
+                <FaEdit color='green' />
               </button>
 
-              <button
-                onClick={handleDeleteCourse}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: 'firebrick',
-                  fontSize: '1.5rem',
-                }}
-              >
-                <FaTrash />
+              <button onClick={handleDeleteCourse} className='delete'>
+                <FaTrash color='red' />
               </button>
             </div>
           )}

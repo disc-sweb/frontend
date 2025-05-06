@@ -16,6 +16,7 @@ import ResetPassword from 'pages/account/ResetPassword';
 import SignUp from 'pages/account/SignUp';
 import CourseConfirmation from 'pages/courses/CourseConfirmation';
 import CourseDetail from 'pages/courses/CourseDetail';
+import CourseUpload from 'pages/courses/CourseUpload';
 import Courses from 'pages/courses/Courses';
 import Register from 'pages/courses/Register';
 import Home from 'pages/home/Home';
@@ -51,6 +52,8 @@ export default function App() {
                 element={<CourseConfirmation />}
               />
             </Route>
+
+            <Route path='upload' element={<CourseUpload />} />
 
             <Route path='*' element={<NotFound />} />
             <Route path='test' element={<TestPage />} />

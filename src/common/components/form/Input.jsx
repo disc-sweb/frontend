@@ -10,7 +10,9 @@ import {
   InputTitle,
   PasswordContainer,
   RedSpan,
+  StyledFileInput,
   StyledInput,
+  StyledTextArea,
 } from './styles';
 
 TitledInput.propTypes = {
@@ -84,7 +86,93 @@ function InputPassword({ title, ...rest }) {
   );
 }
 
+LongTextField.propTypes = InputPropTypes;
+function LongTextField(props) {
+  props.placeholder ??= 'Text Here';
+  return <StyledTextArea {...props} />;
+}
+
+InputLongText.propTypes = {
+  title: PropTypes.string.isRequired,
+  ...InputPropTypes,
+};
+function InputLongText({ title, ...rest }) {
+  return (
+    <TitledInput title={title} required={rest.required}>
+      <LongTextField {...rest} />
+    </TitledInput>
+  );
+}
+
+InputImage.propTypes = {
+  title: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
+};
+
+function InputImage({ title, required, onChange }) {
+  const [fileName, setFileName] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
+    } else {
+      setFileName(null);
+    }
+    onChange(event);
+  };
+
+  return (
+    <TitledInput title={title} required={required}>
+      <StyledFileInput hasFile={!!fileName}>
+        <input type='file' accept='image/*' onChange={handleFileChange} />
+        {!fileName ? (
+          <span>
+            <span>Upload Image</span>
+          </span>
+        ) : (
+          <span>
+            <span>{fileName}</span>
+          </span>
+        )}
+      </StyledFileInput>
+    </TitledInput>
+  );
+}
+
+InputVideo.propTypes = {
+  title: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
+};
+
+function InputVideo({ title, required, onChange }) {
+  const [fileName, setFileName] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
+    } else {
+      setFileName(null);
+    }
+    onChange(event);
+  };
+
+  return (
+    <TitledInput title={title} required={required}>
+      <StyledFileInput hasFile={!!fileName}>
+        <input type='file' accept='video/*' onChange={handleFileChange} />
+      </StyledFileInput>
+    </TitledInput>
+  );
+}
+
 export const Input = {
   Text: InputText,
   Password: InputPassword,
+  LongText: InputLongText,
+  Image: InputImage,
+  Video: InputVideo,
 };

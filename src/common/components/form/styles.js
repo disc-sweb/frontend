@@ -38,6 +38,40 @@ export const StyledInput = styled.input`
   }
 `;
 
+export const StyledTextArea = styled.textarea`
+  height: 200px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #474747;
+  padding: 8px;
+  background-color: transparent;
+  resize: vertical;
+  color: #333;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #aaa;
+  }
+`;
+
+export const StyledFileInput = styled.div`
+  height: 200px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px dashed #474747;
+  border-radius: 8px;
+  background-color: ${(props) => (props.hasFile ? 'white' : '#F4F4EF')};
+  color: #474747;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  input {
+    opacity: 0;
+  }
+`;
+
 export const PasswordContainer = styled.div`
   position: relative;
   width: 100%;
@@ -60,6 +94,13 @@ export const StyledButton = styled(Button.Primary)`
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  background-color: #474747;
-  color: #ffffff;
+  background-color: ${(props) =>
+    props.disabled ? '#474747' : props.ascancel ? '#832D2D' : '#006464'};
+  color: 'var(--white)';
+  transtion: hover 0.3s ease-in-out;
+  &:hover {
+    background-color: ${(props) =>
+      !props.disabled && (props.ascancel ? '#772828' : '#005151')};
+    cursor: ${(props) => props.disabled && 'not-allowed'};
+  }
 `;

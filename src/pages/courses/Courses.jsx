@@ -143,11 +143,6 @@ const Courses = () => {
     fetchData();
   }, []);
 
-  // sample courses for now to test frontend
-  // useEffect(() => {
-  //   setCourses(sampleCourses);
-  // }, [sampleCourses]);
-
   return (
     <div>
       <CoursesStyling>

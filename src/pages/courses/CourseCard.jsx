@@ -1,6 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -81,6 +84,21 @@ const StyledComponent = styled.div`
   .card-button:hover {
     background-color: #2180b9;
   }
+
+  .admin-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+
+  .admin-controls button.edit svg {
+    fill: green;
+  }
+
+  .admin-controls button.delete svg {
+    fill: red;
+  }
 `;
 
 const CourseCard = ({
@@ -93,8 +111,30 @@ const CourseCard = ({
 }) => {
   const navigate = useNavigate();
   console.log('Course ID:', `/courses/${course_id}`);
+
+  //admin state for displaying edit/delete course
+  const [isAdmin, setIsAdmin] = useState(false);
+  //might change based on where infromation is stored or if additional calls needed
+  useEffect(() => {
+    // Example: check if user is admin
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'admin') {
+      setIsAdmin(true);
+    }
+  }, []);
+
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
+  };
+
+  const handleEditCourse = () => {
+    //UPDATE WITH RIGHT PATH
+    navigate(`/admin/edit-course/${course_id}`);
+  };
+
+  const handleDeleteCourse = () => {
+    // Add delete logic here
+    console.log(`Deleting course with ID ${course_id}`);
   };
 
   return (
@@ -105,7 +145,29 @@ const CourseCard = ({
         alt={`Cover for ${course_title}`}
       />
       <div className='card-content'>
-        <h3 className='card-title'>{course_title}</h3>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <h3 className='card-title'>{course_title}</h3>
+          {isAdmin && (
+            <div
+              className='admin-controls'
+              style={{ display: 'flex', gap: '10px' }}
+            >
+              <button onClick={handleEditCourse} className='edit'>
+                <FaEdit color='green' />
+              </button>
+
+              <button onClick={handleDeleteCourse} className='delete'>
+                <FaTrash color='red' />
+              </button>
+            </div>
+          )}
+        </div>
         <p className='card-duration'>{course_duration}</p>
         <p className='card-price'>{course_price.toFixed(2)}</p>
         <p className='card-description'>{course_description}</p>
@@ -116,7 +178,6 @@ const CourseCard = ({
     </StyledComponent>
   );
 };
-
 CourseCard.propTypes = {
   course_id: PropTypes.number.isRequired,
   course_title: PropTypes.string.isRequired,

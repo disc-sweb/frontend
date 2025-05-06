@@ -102,6 +102,8 @@ const Courses = () => {
           },
         });
         const data = await response.json();
+
+        console.log('courses data: ', data);
         console.log('response: ', data);
         setUserCourses(data['userCourses']);
         setNonUserCourses(data['nonUserCourses']);

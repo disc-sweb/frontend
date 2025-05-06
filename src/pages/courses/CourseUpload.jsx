@@ -8,34 +8,6 @@ import SubmitButton from 'common/components/form/SubmitButton';
 import { RedSpan } from 'common/components/form/styles';
 import { StyledForm, StyledPage } from 'pages/account/styles';
 
-// const StyledLink = styled(Link)`
-//   color: #007bff;
-//   text-decoration: none;
-//   font-size: 0.9rem;
-//   margin-top: 1rem;
-//   align-self: flex-start;
-//   font-family: 'PoppinsMedium';
-//   color: #007575;
-
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
-
-// const StyledLinkCenter = styled(Link)`
-//   color: #007bff;
-//   text-decoration: none;
-//   font-size: 0.9rem;
-//   margin-top: 1rem;
-//   align-self: center;
-//   font-family: 'PoppinsMedium';
-//   color: #007575;
-
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
-
 export default function CourseUpload() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -85,6 +57,7 @@ export default function CourseUpload() {
             placeholder='Enter course description'
             value={formState.description}
             onChange={handleChange}
+            required
           />
           <Input.Image
             title='COURSE IMAGE'
@@ -114,6 +87,7 @@ export default function CourseUpload() {
             placeholder='Enter the link to Google Form for course registration'
             value={formState.googleFormLink}
             onChange={handleChange}
+            required
           />
           <SubmitButton disabled={!isFormComplete}>Submit</SubmitButton>
           <SubmitButton onClick={() => navigate('/courses')} ascancel={true}>

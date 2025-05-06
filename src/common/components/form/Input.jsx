@@ -127,6 +127,15 @@ function InputImage({ title, required, onChange }) {
     <TitledInput title={title} required={required}>
       <StyledFileInput hasFile={!!fileName}>
         <input type='file' accept='image/*' onChange={handleFileChange} />
+        {!fileName ? (
+          <span>
+            <span>Upload Image</span>
+          </span>
+        ) : (
+          <span>
+            <span>{fileName}</span>
+          </span>
+        )}
       </StyledFileInput>
     </TitledInput>
   );

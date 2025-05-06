@@ -43,10 +43,11 @@ export const StyledTextArea = styled.textarea`
   width: 100%;
   font-size: 1rem;
   border: 1px solid #474747;
-  border-radius: 8px;
   padding: 8px;
   background-color: transparent;
+  resize: vertical;
   color: #333;
+  box-sizing: border-box;
 
   &::placeholder {
     color: #aaa;
@@ -65,6 +66,10 @@ export const StyledFileInput = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  input {
+    opacity: 0;
+  }
 `;
 
 export const PasswordContainer = styled.div`

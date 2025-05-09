@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// Add this import
+
 import Footer from 'common/components/footer/Footer';
+import { useUser } from 'common/contexts/UserContext';
 
 import CourseCard from './CourseCard';
 
@@ -85,7 +88,7 @@ const CoursesStyling = styled.div`
 const Courses = () => {
   const [userCourses, setUserCourses] = useState([]);
   const [nonUserCourses, setNonUserCourses] = useState([]);
-
+  const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -120,24 +123,26 @@ const Courses = () => {
       <CoursesStyling>
         <div className='header-container'>
           <h1>Courses</h1>
-          <button
-            className='add-course-button'
-            onClick={() => navigate('/upload')}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='#007575'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
+          {user?.admin_access && (
+            <button
+              className='add-course-button'
+              onClick={() => navigate('/upload')}
             >
-              <line x1='12' y1='5' x2='12' y2='19'></line>
-              <line x1='5' y1='12' x2='19' y2='12'></line>
-            </svg>
-            Add Course
-          </button>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='#007575'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+              >
+                <line x1='12' y1='5' x2='12' y2='19'></line>
+                <line x1='5' y1='12' x2='19' y2='12'></line>
+              </svg>
+              Add Course
+            </button>
+          )}
         </div>
         <div className='courses-container'>
           {nonUserCourses &&

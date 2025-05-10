@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -100,6 +101,27 @@ const StyledComponent = styled.div`
     fill: red;
   }
 `;
+const overlayStyle = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  height: '100vh',
+  width: '100vw',
+  backgroundColor: 'rgba(0,0,0,0.4)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const popupStyle = {
+  backgroundColor: 'white',
+  padding: '2rem',
+  borderRadius: '12px',
+  textAlign: 'center',
+  width: '90%',
+  maxWidth: '400px',
+};
 
 const CourseCard = ({
   course_id,
@@ -111,6 +133,7 @@ const CourseCard = ({
 }) => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -180,7 +203,8 @@ const CourseCard = ({
               </button>
 
               <button
-                onClick={() => handleDeleteCourse(course_id)}
+                // onClick={() => handleDeleteCourse(course_id)}
+                onClick={() => setShowConfirm(true)}
                 className='delete'
               >
                 <FaTrash color='red' />
@@ -195,6 +219,59 @@ const CourseCard = ({
           Go To Course
         </button>
       </div>
+
+      {/* Confirmation Popup (placed just before closing tag) */}
+      {showConfirm && (
+        <div style={overlayStyle}>
+          <div style={popupStyle}>
+            <p
+              style={{
+                fontWeight: '600',
+                fontSize: '1.2rem',
+                marginBottom: '1rem',
+              }}
+            >
+              Are you sure you want to delete this course?
+            </p>
+            <div
+              style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}
+            >
+              <button
+                onClick={() => {
+                  handleDeleteCourse(course_id);
+                  setShowConfirm(false);
+                }}
+                style={{
+                  backgroundColor: '#6B1F1F',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  padding: '10px 20px',
+                  cursor: 'pointer',
+                }}
+              >
+                YES
+              </button>
+              <button
+                onClick={() => {
+                  setShowConfirm(false);
+                  navigate('/courses');
+                }}
+                style={{
+                  backgroundColor: '#3f3f3f',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  padding: '10px 20px',
+                  cursor: 'pointer',
+                }}
+              >
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </StyledComponent>
   );
 };

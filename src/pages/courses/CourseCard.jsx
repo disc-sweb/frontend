@@ -1,8 +1,5 @@
 import React from 'react';
 
-// import { useState } from 'react';
-// import { useEffect } from 'react';
-
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

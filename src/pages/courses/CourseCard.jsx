@@ -1,6 +1,7 @@
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+
+// import { useState } from 'react';
+// import { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -125,14 +126,21 @@ const CourseCard = ({
 
   const handleDeleteCourse = async (course_id) => {
     try {
-      const response = await fetch(`/api/courses/${course_id}`, {
+      const BACKEND_URL =
+        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      console.log('Attempting to delete course ID:', course_id);
+      // console.log('Calling:', `${BACKEND_URL}/courses/${course_id}`);
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${BACKEND_URL}/courses/${course_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log('Status:', response.status);
       const data = await response.json();
+      console.log('Response:', data);
 
       if (!response.ok) {
         console.error('Failed to delete course:', data.error || data.message);
@@ -141,6 +149,7 @@ const CourseCard = ({
       }
 
       alert('Course deleted successfully!');
+      window.location.reload();
       // Optionally trigger a re-fetch or remove the course from UI state
     } catch (err) {
       console.error('Error deleting course:', err);
@@ -173,7 +182,10 @@ const CourseCard = ({
                 <FaEdit color='green' />
               </button>
 
-              <button onClick={handleDeleteCourse} className='delete'>
+              <button
+                onClick={() => handleDeleteCourse(course_id)}
+                className='delete'
+              >
                 <FaTrash color='red' />
               </button>
             </div>

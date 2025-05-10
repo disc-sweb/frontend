@@ -102,5 +102,10 @@ export const StyledButton = styled(Button.Primary)`
     background-color: ${(props) =>
       !props.disabled && (props.ascancel ? '#772828' : '#005151')};
     cursor: ${(props) => props.disabled && 'not-allowed'};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px; // Add this to prevent button size changes
   }
 `;

@@ -12,14 +12,16 @@ export default function CourseUpload() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [isFormComplete, setIsFormComplete] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formState, setFormState] = useState({
     title: '',
     price: '',
     description: '',
-    courseImage: '',
-    courseVideo: '',
-    googleFormLink: '',
+    imageFile: '',
+    videoFile: '',
+    formLink: '',
+    courseType: 'Online',
   });
 
   const handleChange = (e) => {
@@ -27,14 +29,52 @@ export default function CourseUpload() {
     setFormState(updatedFormState);
     setError('');
 
-    const isComplete = Object.values(updatedFormState).every(
-      (value) => value.trim() !== ''
-    );
+    const isComplete = Object.values(updatedFormState).every((value) => {
+      if (value instanceof File) {
+        return true; // File is present
+      }
+      return typeof value === 'string' && value.trim() !== '';
+    });
+
     setIsFormComplete(isComplete);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      console.log('Submitting form...', formState);
+      const formData = new FormData();
+      Object.entries(formState).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const BACKEND_URL =
+        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${BACKEND_URL}/courses/upload`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log('Server response: ', data);
+
+      if (response.ok) {
+        // Navigate to courses page on successful submission
+        navigate('/courses');
+      } else {
+        setError(data.message || 'Failed to upload course');
+      }
+    } catch (error) {
+      console.error('Error uploading course:', error);
+      setError('Failed to upload course');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -61,8 +101,8 @@ export default function CourseUpload() {
           />
           <Input.Image
             title='COURSE IMAGE'
-            name='courseImage'
-            value={formState.courseImage}
+            name='imageFile'
+            value={formState.imageFile}
             onChange={handleChange}
             required
           />
@@ -76,21 +116,31 @@ export default function CourseUpload() {
           />
           <Input.Video
             title='COURSE VIDEO'
-            name='courseVideo'
-            value={formState.courseVideo}
+            name='videoFile'
+            value={formState.videoFile}
             onChange={handleChange}
             required
           />
           <Input.Text
             title='GOOGLE FORM LINK'
-            name='googleFormLink'
+            name='formLink'
             placeholder='Enter the link to Google Form for course registration'
-            value={formState.googleFormLink}
+            value={formState.formLink}
             onChange={handleChange}
             required
           />
-          <SubmitButton disabled={!isFormComplete}>Submit</SubmitButton>
-          <SubmitButton onClick={() => navigate('/courses')} ascancel={true}>
+          <SubmitButton
+            disabled={!isFormComplete || isSubmitting}
+            onClick={handleSubmit}
+            isLoading={isSubmitting}
+          >
+            {isSubmitting ? 'Uploading' : 'Submit'}
+          </SubmitButton>
+          <SubmitButton
+            onClick={() => navigate('/courses')}
+            ascancel={true}
+            disabled={isSubmitting}
+          >
             Cancel
           </SubmitButton>
         </Form>

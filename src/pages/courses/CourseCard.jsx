@@ -110,7 +110,6 @@ const CourseCard = ({
   course_image,
 }) => {
   const navigate = useNavigate();
-  console.log('Course ID:', `/courses/${course_id}`);
 
   //admin state for displaying edit/delete course
   const [isAdmin, setIsAdmin] = useState(false);

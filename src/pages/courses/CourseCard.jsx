@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useUser } from 'common/contexts/UserContext';
 
 const StyledComponent = styled.div`
   background-color: white;
@@ -110,17 +110,7 @@ const CourseCard = ({
   course_image,
 }) => {
   const navigate = useNavigate();
-
-  //admin state for displaying edit/delete course
-  const [isAdmin, setIsAdmin] = useState(false);
-  //might change based on where infromation is stored or if additional calls needed
-  useEffect(() => {
-    // Example: check if user is admin
-    const userRole = localStorage.getItem('userRole');
-    if (userRole === 'admin') {
-      setIsAdmin(true);
-    }
-  }, []);
+  const { user } = useUser();
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -131,9 +121,37 @@ const CourseCard = ({
     navigate(`/admin/edit-course/${course_id}`);
   };
 
-  const handleDeleteCourse = () => {
-    // Add delete logic here
-    console.log(`Deleting course with ID ${course_id}`);
+  const handleDeleteCourse = async (course_id) => {
+    try {
+      const BACKEND_URL =
+        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      console.log('Attempting to delete course ID:', course_id);
+      // console.log('Calling:', `${BACKEND_URL}/courses/${course_id}`);
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${BACKEND_URL}/courses/${course_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Status:', response.status);
+      const data = await response.json();
+      console.log('Response:', data);
+
+      if (!response.ok) {
+        console.error('Failed to delete course:', data.error || data.message);
+        alert(`Failed to delete course: ${data.error || data.message}`);
+        return;
+      }
+
+      alert('Course deleted successfully!');
+      window.location.reload();
+      // Optionally trigger a re-fetch or remove the course from UI state
+    } catch (err) {
+      console.error('Error deleting course:', err);
+      alert('An unexpected error occurred while deleting the course.');
+    }
   };
 
   return (
@@ -152,7 +170,7 @@ const CourseCard = ({
           }}
         >
           <h3 className='card-title'>{course_title}</h3>
-          {isAdmin && (
+          {user?.admin_access && (
             <div
               className='admin-controls'
               style={{ display: 'flex', gap: '10px' }}
@@ -161,7 +179,10 @@ const CourseCard = ({
                 <FaEdit color='green' />
               </button>
 
-              <button onClick={handleDeleteCourse} className='delete'>
+              <button
+                onClick={() => handleDeleteCourse(course_id)}
+                className='delete'
+              >
                 <FaTrash color='red' />
               </button>
             </div>

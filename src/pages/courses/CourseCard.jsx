@@ -7,6 +7,8 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { useUser } from 'common/contexts/UserContext';
+
 const StyledComponent = styled.div`
   background-color: white;
   border-radius: 8px;
@@ -110,18 +112,7 @@ const CourseCard = ({
   course_image,
 }) => {
   const navigate = useNavigate();
-  console.log('Course ID:', `/courses/${course_id}`);
-
-  //admin state for displaying edit/delete course
-  const [isAdmin, setIsAdmin] = useState(false);
-  //might change based on where infromation is stored or if additional calls needed
-  useEffect(() => {
-    // Example: check if user is admin
-    const userRole = localStorage.getItem('userRole');
-    if (userRole === 'admin') {
-      setIsAdmin(true);
-    }
-  }, []);
+  const { user } = useUser();
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -173,7 +164,7 @@ const CourseCard = ({
           }}
         >
           <h3 className='card-title'>{course_title}</h3>
-          {isAdmin && (
+          {user?.admin_access && (
             <div
               className='admin-controls'
               style={{ display: 'flex', gap: '10px' }}

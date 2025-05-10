@@ -108,33 +108,50 @@ InputImage.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  name: PropTypes.string.isRequired,
 };
 
-function InputImage({ title, required, onChange }) {
+function InputImage({ title, required, onChange, name }) {
   const [fileName, setFileName] = useState(null);
+  const fileInputRef = React.useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
+      // Create a synthetic event that matches the expected format
+      const syntheticEvent = {
+        target: {
+          name: name,
+          value: file,
+          files: [file],
+        },
+      };
+      onChange(syntheticEvent);
     } else {
       setFileName(null);
     }
-    onChange(event);
+  };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
     <TitledInput title={title} required={required}>
-      <StyledFileInput hasFile={!!fileName}>
-        <input type='file' accept='image/*' onChange={handleFileChange} />
+      <StyledFileInput hasFile={!!fileName} onClick={handleClick}>
+        <input
+          type='file'
+          accept='image/*'
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          name={name}
+        />
         {!fileName ? (
-          <span>
-            <span>Upload Image</span>
-          </span>
+          <span>Click to Upload Image</span>
         ) : (
-          <span>
-            <span>{fileName}</span>
-          </span>
+          <span>{fileName}</span>
         )}
       </StyledFileInput>
     </TitledInput>
@@ -145,25 +162,51 @@ InputVideo.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   required: PropTypes.bool,
+  name: PropTypes.string.isRequired,
 };
 
-function InputVideo({ title, required, onChange }) {
+function InputVideo({ title, required, onChange, name }) {
   const [fileName, setFileName] = useState(null);
+  const fileInputRef = React.useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
+      // Create a synthetic event that matches the expected format
+      const syntheticEvent = {
+        target: {
+          name: name,
+          value: file,
+          files: [file],
+        },
+      };
+      onChange(syntheticEvent);
     } else {
       setFileName(null);
     }
-    onChange(event);
+  };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
     <TitledInput title={title} required={required}>
-      <StyledFileInput hasFile={!!fileName}>
-        <input type='file' accept='video/*' onChange={handleFileChange} />
+      <StyledFileInput hasFile={!!fileName} onClick={handleClick}>
+        <input
+          type='file'
+          accept='video/*'
+          onChange={handleFileChange}
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          name={name}
+        />
+        {!fileName ? (
+          <span>Click to Upload Video</span>
+        ) : (
+          <span>{fileName}</span>
+        )}
       </StyledFileInput>
     </TitledInput>
   );

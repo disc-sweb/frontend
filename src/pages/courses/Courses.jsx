@@ -126,14 +126,6 @@ const Courses = () => {
   const navigate = useNavigate();
   const [language, setLanguage] = useState('en');
 
-  const handleLanguageChange = () => {
-    if (language === 'en') {
-      setLanguage('sp');
-    } else {
-      setLanguage('en');
-    }
-  };
-
   useEffect(() => {
     // Fetch data from the backend
     const fetchData = async () => {
@@ -196,7 +188,7 @@ const Courses = () => {
                   ? 'language-button-green'
                   : 'language-button-white'
               }
-              onClick={handleLanguageChange}
+              onClick={() => setLanguage('en')}
             >
               English
             </button>
@@ -206,7 +198,7 @@ const Courses = () => {
                   ? 'language-button-green'
                   : 'language-button-white'
               }
-              onClick={handleLanguageChange}
+              onClick={() => setLanguage('sp')}
             >
               Espanol
             </button>

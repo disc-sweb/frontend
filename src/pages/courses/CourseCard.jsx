@@ -132,9 +132,29 @@ const CourseCard = ({
     navigate(`/admin/edit-course/${course_id}`);
   };
 
-  const handleDeleteCourse = () => {
-    // Add delete logic here
-    console.log(`Deleting course with ID ${course_id}`);
+  const handleDeleteCourse = async (course_id) => {
+    try {
+      const response = await fetch(`/api/courses/${course_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error('Failed to delete course:', data.error || data.message);
+        alert(`Failed to delete course: ${data.error || data.message}`);
+        return;
+      }
+
+      alert('Course deleted successfully!');
+      // Optionally trigger a re-fetch or remove the course from UI state
+    } catch (err) {
+      console.error('Error deleting course:', err);
+      alert('An unexpected error occurred while deleting the course.');
+    }
   };
 
   return (

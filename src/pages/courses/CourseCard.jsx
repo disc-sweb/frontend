@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useUser } from 'common/contexts/UserContext';
+
+import DeleteDialog from './DeleteDialog';
 
 const StyledComponent = styled.div`
   background-color: white;
@@ -111,6 +113,7 @@ const CourseCard = ({
 }) => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -118,7 +121,7 @@ const CourseCard = ({
 
   const handleEditCourse = () => {
     //UPDATE WITH RIGHT PATH
-    navigate(`/admin/edit-course/${course_id}`);
+    navigate(`/courses/edit/${course_id}`);
   };
 
   const handleDeleteCourse = async (course_id) => {
@@ -144,14 +147,17 @@ const CourseCard = ({
         alert(`Failed to delete course: ${data.error || data.message}`);
         return;
       }
-
-      alert('Course deleted successfully!');
       window.location.reload();
       // Optionally trigger a re-fetch or remove the course from UI state
     } catch (err) {
       console.error('Error deleting course:', err);
       alert('An unexpected error occurred while deleting the course.');
     }
+  };
+
+  const handleDeleteConfirm = async () => {
+    await handleDeleteCourse(course_id);
+    setShowDeleteDialog(false);
   };
 
   return (
@@ -180,7 +186,7 @@ const CourseCard = ({
               </button>
 
               <button
-                onClick={() => handleDeleteCourse(course_id)}
+                onClick={() => setShowDeleteDialog(true)}
                 className='delete'
               >
                 <FaTrash color='red' />
@@ -195,6 +201,14 @@ const CourseCard = ({
           Go To Course
         </button>
       </div>
+      {showDeleteDialog && (
+        <DeleteDialog
+          title='Delete Course'
+          message={`Are you sure you want to delete "${course_title}"? This action cannot be undone.`}
+          onConfirm={handleDeleteConfirm}
+          onCancel={() => setShowDeleteDialog(false)}
+        />
+      )}
     </StyledComponent>
   );
 };

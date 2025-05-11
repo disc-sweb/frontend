@@ -4,8 +4,10 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll": true,
+    "source.fixAll.eslint": true
   },
+  "files.eol": "\n",
   "editor.formatOnSaveMode": "file",
   "vs-code-prettier-eslint.prettierLast": false,
   "editor.tabSize": 2

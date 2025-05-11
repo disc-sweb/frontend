@@ -211,10 +211,11 @@ const Courses = () => {
                 key={index}
                 course_id={classData.id}
                 course_title={classData.title}
-                course_duration={'5 hours'}
+                course_type={classData.course_type}
                 course_price={classData.price}
                 course_description={classData.description}
                 course_image={classData.cover_image_link}
+                courseOwner={false}
               />
             ))}
           {userCourses &&
@@ -223,10 +224,11 @@ const Courses = () => {
                 key={index}
                 course_id={classData.id}
                 course_title={classData.title}
-                course_duration={'5 hours'}
+                course_type={classData.course_type}
                 course_price={classData.price}
                 course_description={classData.description}
                 course_image={classData.cover_image_link}
+                courseOwner={true}
               />
             ))}
         </div>

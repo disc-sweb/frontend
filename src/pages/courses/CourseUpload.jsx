@@ -8,6 +8,7 @@ import SubmitButton from 'common/components/form/SubmitButton';
 import { RedSpan } from 'common/components/form/styles';
 import { StyledForm, StyledPage } from 'pages/account/styles';
 
+
 export default function CourseUpload() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -21,7 +22,8 @@ export default function CourseUpload() {
     imageFile: '',
     videoFile: '',
     formLink: '',
-    courseType: 'Online',
+    courseType: '',
+    language: '',
   });
 
   const handleChange = (e) => {
@@ -96,6 +98,29 @@ export default function CourseUpload() {
             name='description'
             placeholder='Enter course description'
             value={formState.description}
+            onChange={handleChange}
+            required
+          />
+          <Input.Radio
+            title='COURSE TYPE'
+            name='courseType'
+            options={[
+              { value: 'In-Person', label: 'In-Person' },
+              { value: 'Online', label: 'Online' },
+              { value: 'Virtual', label: 'Virtual' },
+            ]}
+            value={formState.courseType}
+            onChange={handleChange}
+            required
+          />
+          <Input.Radio
+            title='LANGUAGE'
+            name='language'
+            options={[
+              { value: 'English', label: 'English' },
+              { value: 'Spanish', label: 'Spanish' },
+            ]}
+            value={formState.language}
             onChange={handleChange}
             required
           />

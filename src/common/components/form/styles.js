@@ -109,3 +109,51 @@ export const StyledButton = styled(Button.Primary)`
     min-height: 40px; // Add this to prevent button size changes
   }
 `;
+
+
+export const RadioGroup = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+`;
+
+export const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+
+  input[type='radio'] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007575;
+    border-radius: 50%;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+
+    &:checked {
+      background-color: #007575;
+      border: 2px solid #007575;
+
+      &:after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+    }
+
+    &:hover {
+      border-color: #005757;
+    }
+  }
+`;

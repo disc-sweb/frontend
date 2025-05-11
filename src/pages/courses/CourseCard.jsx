@@ -46,12 +46,6 @@ const StyledComponent = styled.div`
     color: #333;
   }
 
-  .card-duration {
-    font-size: 14px; /* Increased from 12px */
-    color: #666;
-    margin-bottom: 10px; /* Increased from 8px */
-  }
-
   .card-price {
     font-weight: 600;
     font-size: 18px; /* Added font-size */
@@ -101,15 +95,26 @@ const StyledComponent = styled.div`
   .admin-controls button.delete svg {
     fill: red;
   }
+
+  .card-type {
+    font-size: 14px;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 4px 12px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
 `;
 
 const CourseCard = ({
   course_id,
   course_title,
-  course_duration,
   course_price,
   course_description,
   course_image,
+  course_type, 
+  courseOwner,
 }) => {
   const navigate = useNavigate();
   const { user } = useUser();
@@ -194,11 +199,11 @@ const CourseCard = ({
             </div>
           )}
         </div>
-        <p className='card-duration'>{course_duration}</p>
+        <span className='card-type'>{course_type}</span>
         <p className='card-price'>{course_price.toFixed(2)}</p>
         <p className='card-description'>{course_description}</p>
         <button className='card-button' onClick={handleGoToCourse}>
-          Go To Course
+          {courseOwner ? 'Go to Course' : 'View Course'}
         </button>
       </div>
       {showDeleteDialog && (
@@ -215,13 +220,14 @@ const CourseCard = ({
 CourseCard.propTypes = {
   course_id: PropTypes.number.isRequired,
   course_title: PropTypes.string.isRequired,
-  course_duration: PropTypes.string.isRequired,
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
   course_image: PropTypes.string.isRequired,
+  course_type: PropTypes.string.isRequired, // Add this prop type
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',
+  course_type: 'Online', // Add default value
 };
 
 export default CourseCard;

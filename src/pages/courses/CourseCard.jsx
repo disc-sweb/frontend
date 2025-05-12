@@ -113,7 +113,7 @@ const CourseCard = ({
   course_price,
   course_description,
   course_image,
-  course_type, 
+  course_type,
   courseOwner,
 }) => {
   const navigate = useNavigate();
@@ -223,7 +223,8 @@ CourseCard.propTypes = {
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
   course_image: PropTypes.string.isRequired,
-  course_type: PropTypes.string.isRequired, // Add this prop type
+  course_type: PropTypes.string.isRequired,
+  courseOwner: PropTypes.bool.isRequired,
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',

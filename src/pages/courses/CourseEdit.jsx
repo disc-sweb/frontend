@@ -21,25 +21,44 @@ export default function CourseUpload() {
     price: '',
     description: '',
     formLink: '',
-    courseType: 'Online',
+    courseType: '',
+    language: '', // Add this field
   });
 
   const backendUrl =
     process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
   const token = localStorage.getItem('authToken');
 
+  // Update handleChange function to handle video visibility
   const handleChange = (e) => {
-    const updatedFormState = { ...formState, [e.target.name]: e.target.value };
+    const { name, value } = e.target;
+    const updatedFormState = { ...formState, [name]: value };
+
+    // Clear video file if changing from Online to other course types
+    if (name === 'courseType' && value !== 'Online') {
+      updatedFormState.videoFile = '';
+    }
+
     console.log('Updated form state:', updatedFormState);
     setFormState(updatedFormState);
     setError('');
 
-    const isComplete = Object.values(updatedFormState).every((value) => {
-      if (value instanceof File) {
-        return true; // File is present
+    const isComplete = Object.entries(updatedFormState).every(
+      ([key, value]) => {
+        if (key === 'videoFile') {
+          // Only validate video for Online courses
+          return (
+            updatedFormState.courseType !== 'Online' ||
+            value instanceof File ||
+            value.trim() !== ''
+          );
+        }
+        if (value instanceof File) {
+          return true;
+        }
+        return typeof value === 'string' && value.trim() !== '';
       }
-      return typeof value === 'string' && value.trim() !== '';
-    });
+    );
 
     setIsFormComplete(isComplete);
   };
@@ -107,6 +126,7 @@ export default function CourseUpload() {
           description: data.description,
           formLink: data.form_link,
           courseType: data.course_type,
+          language: data.language, // Add this field
         });
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -118,6 +138,7 @@ export default function CourseUpload() {
     fetchCourse();
   }, [courseId, token, backendUrl]);
 
+  // Update the form JSX to conditionally render video input
   return (
     <StyledPage>
       <StyledForm>
@@ -140,6 +161,29 @@ export default function CourseUpload() {
             onChange={handleChange}
             required
           />
+          <Input.Radio
+            title='COURSE TYPE'
+            name='courseType'
+            options={[
+              { value: 'In-Person', label: 'In-Person' },
+              { value: 'Online', label: 'Online' },
+              { value: 'Virtual', label: 'Virtual' },
+            ]}
+            value={formState.courseType}
+            onChange={handleChange}
+            required
+          />
+          <Input.Radio
+            title='LANGUAGE'
+            name='language'
+            options={[
+              { value: 'English', label: 'English' },
+              { value: 'Spanish', label: 'Spanish' },
+            ]}
+            value={formState.language}
+            onChange={handleChange}
+            required
+          />
           <Input.Image
             title='NEW COURSE IMAGE'
             name='imageFile'
@@ -154,12 +198,14 @@ export default function CourseUpload() {
             onChange={handleChange}
             required
           />
-          <Input.Video
-            title='NEW COURSE VIDEO'
-            name='videoFile'
-            value={formState.videoFile}
-            onChange={handleChange}
-          />
+          {formState.courseType === 'Online' && (
+            <Input.Video
+              title='NEW COURSE VIDEO'
+              name='videoFile'
+              value={formState.videoFile}
+              onChange={handleChange}
+            />
+          )}
           <Input.Text
             title='GOOGLE FORM LINK'
             name='formLink'

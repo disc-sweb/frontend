@@ -8,7 +8,6 @@ import SubmitButton from 'common/components/form/SubmitButton';
 import { RedSpan } from 'common/components/form/styles';
 import { StyledForm, StyledPage } from 'pages/account/styles';
 
-
 export default function CourseUpload() {
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -27,16 +26,33 @@ export default function CourseUpload() {
   });
 
   const handleChange = (e) => {
-    const updatedFormState = { ...formState, [e.target.name]: e.target.value };
+    const { name, value } = e.target;
+    const updatedFormState = { ...formState, [name]: value };
+
+    // Clear video file if changing from Online to other course types
+    if (name === 'courseType' && value !== 'Online') {
+      updatedFormState.videoFile = '';
+    }
+
     setFormState(updatedFormState);
     setError('');
 
-    const isComplete = Object.values(updatedFormState).every((value) => {
-      if (value instanceof File) {
-        return true; // File is present
+    const isComplete = Object.entries(updatedFormState).every(
+      ([key, value]) => {
+        if (key === 'videoFile') {
+          // Only validate video for Online courses
+          return (
+            updatedFormState.courseType !== 'Online' ||
+            value instanceof File ||
+            value.trim() !== ''
+          );
+        }
+        if (value instanceof File) {
+          return true;
+        }
+        return typeof value === 'string' && value.trim() !== '';
       }
-      return typeof value === 'string' && value.trim() !== '';
-    });
+    );
 
     setIsFormComplete(isComplete);
   };
@@ -139,13 +155,15 @@ export default function CourseUpload() {
             onChange={handleChange}
             required
           />
-          <Input.Video
-            title='COURSE VIDEO'
-            name='videoFile'
-            value={formState.videoFile}
-            onChange={handleChange}
-            required
-          />
+          {formState.courseType === 'Online' && (
+            <Input.Video
+              title='COURSE VIDEO'
+              name='videoFile'
+              value={formState.videoFile}
+              onChange={handleChange}
+              required
+            />
+          )}
           <Input.Text
             title='GOOGLE FORM LINK'
             name='formLink'

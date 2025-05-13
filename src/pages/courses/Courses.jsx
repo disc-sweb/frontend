@@ -123,7 +123,16 @@ const Courses = () => {
   const [nonUserCourses, setNonUserCourses] = useState([]);
   const { user } = useUser();
   const navigate = useNavigate();
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('English');
+
+  // Filter courses based on selected language
+  const filteredNonUserCourses = nonUserCourses.filter(
+    (course) => course.language === language
+  );
+
+  const filteredUserCourses = userCourses.filter(
+    (course) => course.language === language
+  );
 
   useEffect(() => {
     // Fetch data from the backend
@@ -183,51 +192,51 @@ const Courses = () => {
           <div className='language-button-container'>
             <button
               className={
-                language == 'en'
+                language === 'English'
                   ? 'language-button-green'
                   : 'language-button-white'
               }
-              onClick={() => setLanguage('en')}
+              onClick={() => setLanguage('English')}
             >
               English
             </button>
             <button
               className={
-                language == 'sp'
+                language === 'Spanish'
                   ? 'language-button-green'
                   : 'language-button-white'
               }
-              onClick={() => setLanguage('sp')}
+              onClick={() => setLanguage('Spanish')}
             >
-              Espanol
+              Español
             </button>
           </div>
         </div>
         <div className='courses-container'>
-          {nonUserCourses &&
-            nonUserCourses.map((classData, index) => (
-              <CourseCard
-                key={index}
-                course_id={classData.id}
-                course_title={classData.title}
-                course_duration={'5 hours'}
-                course_price={classData.price}
-                course_description={classData.description}
-                course_image={classData.cover_image_link}
-              />
-            ))}
-          {userCourses &&
-            userCourses.map((classData, index) => (
-              <CourseCard
-                key={index}
-                course_id={classData.id}
-                course_title={classData.title}
-                course_duration={'5 hours'}
-                course_price={classData.price}
-                course_description={classData.description}
-                course_image={classData.cover_image_link}
-              />
-            ))}
+          {filteredNonUserCourses.map((classData, index) => (
+            <CourseCard
+              key={index}
+              course_id={classData.id}
+              course_title={classData.title}
+              course_type={classData.course_type}
+              course_price={classData.price}
+              course_description={classData.description}
+              course_image={classData.cover_image_link}
+              courseOwner={false}
+            />
+          ))}
+          {filteredUserCourses.map((classData, index) => (
+            <CourseCard
+              key={index}
+              course_id={classData.id}
+              course_title={classData.title}
+              course_type={classData.course_type}
+              course_price={classData.price}
+              course_description={classData.description}
+              course_image={classData.cover_image_link}
+              courseOwner={true}
+            />
+          ))}
         </div>
       </CoursesStyling>
       <Footer />

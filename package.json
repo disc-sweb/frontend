@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cloudinary": "^2.6.0",
     "cra-template": "1.2.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",

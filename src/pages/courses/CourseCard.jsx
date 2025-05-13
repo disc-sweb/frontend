@@ -1,11 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useUser } from 'common/contexts/UserContext';
+
+import DeleteDialog from './DeleteDialog';
 
 const StyledComponent = styled.div`
   background-color: white;
@@ -42,12 +44,6 @@ const StyledComponent = styled.div`
     font-weight: 600;
     margin-bottom: 8px; /* Increased from 5px */
     color: #333;
-  }
-
-  .card-duration {
-    font-size: 14px; /* Increased from 12px */
-    color: #666;
-    margin-bottom: 10px; /* Increased from 8px */
   }
 
   .card-price {
@@ -99,28 +95,30 @@ const StyledComponent = styled.div`
   .admin-controls button.delete svg {
     fill: red;
   }
+
+  .card-type {
+    font-size: 14px;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 4px 12px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
 `;
 
 const CourseCard = ({
   course_id,
   course_title,
-  course_duration,
   course_price,
   course_description,
   course_image,
+  course_type,
+  courseOwner,
 }) => {
   const navigate = useNavigate();
-
-  //admin state for displaying edit/delete course
-  const [isAdmin, setIsAdmin] = useState(false);
-  //might change based on where infromation is stored or if additional calls needed
-  useEffect(() => {
-    // Example: check if user is admin
-    const userRole = localStorage.getItem('userRole');
-    if (userRole === 'admin') {
-      setIsAdmin(true);
-    }
-  }, []);
+  const { user } = useUser();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleGoToCourse = () => {
     navigate(`/courses/${course_id}`);
@@ -128,12 +126,43 @@ const CourseCard = ({
 
   const handleEditCourse = () => {
     //UPDATE WITH RIGHT PATH
-    navigate(`/admin/edit-course/${course_id}`);
+    navigate(`/courses/edit/${course_id}`);
   };
 
-  const handleDeleteCourse = () => {
-    // Add delete logic here
-    console.log(`Deleting course with ID ${course_id}`);
+  const handleDeleteCourse = async (course_id) => {
+    try {
+      const BACKEND_URL =
+        process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+      console.log('Attempting to delete course ID:', course_id);
+      // console.log('Calling:', `${BACKEND_URL}/courses/${course_id}`);
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${BACKEND_URL}/courses/${course_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Status:', response.status);
+      const data = await response.json();
+      console.log('Response:', data);
+
+      if (!response.ok) {
+        console.error('Failed to delete course:', data.error || data.message);
+        alert(`Failed to delete course: ${data.error || data.message}`);
+        return;
+      }
+      window.location.reload();
+      // Optionally trigger a re-fetch or remove the course from UI state
+    } catch (err) {
+      console.error('Error deleting course:', err);
+      alert('An unexpected error occurred while deleting the course.');
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    await handleDeleteCourse(course_id);
+    setShowDeleteDialog(false);
   };
 
   return (
@@ -152,7 +181,7 @@ const CourseCard = ({
           }}
         >
           <h3 className='card-title'>{course_title}</h3>
-          {isAdmin && (
+          {user?.admin_access && (
             <div
               className='admin-controls'
               style={{ display: 'flex', gap: '10px' }}
@@ -161,32 +190,45 @@ const CourseCard = ({
                 <FaEdit color='green' />
               </button>
 
-              <button onClick={handleDeleteCourse} className='delete'>
+              <button
+                onClick={() => setShowDeleteDialog(true)}
+                className='delete'
+              >
                 <FaTrash color='red' />
               </button>
             </div>
           )}
         </div>
-        <p className='card-duration'>{course_duration}</p>
+        <span className='card-type'>{course_type}</span>
         <p className='card-price'>{course_price.toFixed(2)}</p>
         <p className='card-description'>{course_description}</p>
         <button className='card-button' onClick={handleGoToCourse}>
-          Go To Course
+          {courseOwner ? 'Go to Course' : 'View Course'}
         </button>
       </div>
+      {showDeleteDialog && (
+        <DeleteDialog
+          title='Delete Course'
+          message={`Are you sure you want to delete "${course_title}"? This action cannot be undone.`}
+          onConfirm={handleDeleteConfirm}
+          onCancel={() => setShowDeleteDialog(false)}
+        />
+      )}
     </StyledComponent>
   );
 };
 CourseCard.propTypes = {
   course_id: PropTypes.number.isRequired,
   course_title: PropTypes.string.isRequired,
-  course_duration: PropTypes.string.isRequired,
   course_price: PropTypes.number.isRequired,
   course_description: PropTypes.string.isRequired,
   course_image: PropTypes.string.isRequired,
+  course_type: PropTypes.string.isRequired,
+  courseOwner: PropTypes.bool.isRequired,
 };
 CourseCard.defaultProps = {
   course_description: 'No description provided',
+  course_type: 'Online', // Add default value
 };
 
 export default CourseCard;

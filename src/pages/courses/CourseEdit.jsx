@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Form, FormTitle } from 'common/components/form/Form';
 import { Input } from 'common/components/form/Input';
@@ -10,6 +10,8 @@ import { StyledForm, StyledPage } from 'pages/account/styles';
 
 export default function CourseUpload() {
   const navigate = useNavigate();
+  const { courseId } = useParams();
+
   const [error, setError] = useState('');
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -18,13 +20,16 @@ export default function CourseUpload() {
     title: '',
     price: '',
     description: '',
-    imageFile: '',
-    videoFile: '',
     formLink: '',
     courseType: '',
-    language: '',
+    language: '', // Add this field
   });
 
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+  const token = localStorage.getItem('authToken');
+
+  // Update handleChange function to handle video visibility
   const handleChange = (e) => {
     const { name, value } = e.target;
     const updatedFormState = { ...formState, [name]: value };
@@ -34,6 +39,7 @@ export default function CourseUpload() {
       updatedFormState.videoFile = '';
     }
 
+    console.log('Updated form state:', updatedFormState);
     setFormState(updatedFormState);
     setError('');
 
@@ -70,8 +76,8 @@ export default function CourseUpload() {
       const BACKEND_URL =
         process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${BACKEND_URL}/courses/upload`, {
-        method: 'POST',
+      const response = await fetch(`${BACKEND_URL}/courses/${courseId}`, {
+        method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -95,6 +101,44 @@ export default function CourseUpload() {
     }
   };
 
+  useEffect(() => {
+    // Simulated API call for demonstration
+    const fetchCourse = async () => {
+      try {
+        const BACKEND_URL =
+          process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+        const token = localStorage.getItem('authToken');
+        if (!token) throw new Error('User not logged in.');
+        const response = await fetch(`${BACKEND_URL}/courses/${courseId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Course not found');
+        }
+        const data = await response.json();
+        console.log('response: ', data);
+        setFormState({
+          title: data.title,
+          price: data.price.toString(),
+          description: data.description,
+          formLink: data.form_link,
+          courseType: data.course_type,
+          language: data.language, // Add this field
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        console.log('Course data fetched successfully');
+      }
+    };
+
+    fetchCourse();
+  }, [courseId, token, backendUrl]);
+
+  // Update the form JSX to conditionally render video input
   return (
     <StyledPage>
       <StyledForm>
@@ -141,11 +185,10 @@ export default function CourseUpload() {
             required
           />
           <Input.Image
-            title='COURSE IMAGE'
+            title='NEW COURSE IMAGE'
             name='imageFile'
             value={formState.imageFile}
             onChange={handleChange}
-            required
           />
           <Input.Text
             title='PRICE'
@@ -157,11 +200,10 @@ export default function CourseUpload() {
           />
           {formState.courseType === 'Online' && (
             <Input.Video
-              title='COURSE VIDEO'
+              title='NEW COURSE VIDEO'
               name='videoFile'
               value={formState.videoFile}
               onChange={handleChange}
-              required
             />
           )}
           <Input.Text

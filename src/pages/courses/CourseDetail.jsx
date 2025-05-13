@@ -269,16 +269,27 @@ const CourseDetail = () => {
         </BackButtonContainer>
 
         <ContentWrapper>
-          <VideoContainer>
-            <VideoPlayer
-              videoLink={
-                courseData.video_link || courseData.restricted_video_link
-              }
-              isRegistered={courseData.video_link}
-              title={courseData.title}
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          {courseData.course_type === 'Online' ? (
+            <VideoContainer>
+              <VideoPlayer
+                videoLink={
+                  courseData.video_link || courseData.restricted_video_link
+                }
+                isRegistered={Boolean(courseData.video_link)}
+                title={courseData.title}
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              />
+            </VideoContainer>
+          ) : (
+            <img
+              src={courseData.cover_image_link}
+              alt={courseData.title}
+              style={{
+                width: '50%',
+                borderRadius: '8px',
+              }}
             />
-          </VideoContainer>
+          )}
 
           <CourseInfo>
             <CourseTitle>{courseData.title}</CourseTitle>

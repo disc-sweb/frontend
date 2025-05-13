@@ -9,6 +9,8 @@ import {
   InputName,
   InputTitle,
   PasswordContainer,
+  RadioGroup,
+  RadioLabel,
   RedSpan,
   StyledFileInput,
   StyledInput,
@@ -212,10 +214,46 @@ function InputVideo({ title, required, onChange, name }) {
   );
 }
 
+InputRadio.propTypes = {
+  title: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  required: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+};
+
+function InputRadio({ title, options, value, required, onChange, name }) {
+  return (
+    <TitledInput title={title} required={required}>
+      <RadioGroup>
+        {options.map((option) => (
+          <RadioLabel key={option.value}>
+            <input
+              type='radio'
+              name={name}
+              value={option.value}
+              checked={value === option.value}
+              onChange={onChange}
+            />
+            {option.label}
+          </RadioLabel>
+        ))}
+      </RadioGroup>
+    </TitledInput>
+  );
+}
+
 export const Input = {
   Text: InputText,
   Password: InputPassword,
   LongText: InputLongText,
   Image: InputImage,
   Video: InputVideo,
+  Radio: InputRadio,
 };

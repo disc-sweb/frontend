@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Button } from 'common/components/Button';
 
-export const StyledForm = styled.form`
+export const StyledForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;

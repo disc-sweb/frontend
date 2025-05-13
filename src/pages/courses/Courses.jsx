@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Add this import
-
 import Footer from 'common/components/footer/Footer';
 import { useUser } from 'common/contexts/UserContext';
 
@@ -24,6 +22,11 @@ const CoursesStyling = styled.div`
     text-align: center;
     color: #007575;
     margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin: 0;
   }
 
   .header-container {
@@ -59,11 +62,42 @@ const CoursesStyling = styled.div`
     height: 16px;
   }
 
+  .language-button-green {
+    padding: 12px 40px;
+    border: 2px solid #007f80;
+    background: #007f80;
+    color: #ffffff;
+    font-size: 16px;
+  }
+
+  .language-button-white {
+    padding: 12px 40px;
+    border: 2px solid #007f80;
+    background: #ffffff;
+    color: #007f80;
+    font-size: 16px;
+  }
+
   .courses-container {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
+  }
+
+  .language-container {
+    display: flex;
+    padding: 48px 120px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 12px;
+    align-self: stretch;
+  }
+
+  .language-button-container {
+    display: flex;
+    gap: 8px;
   }
 
   padding: 50px 100px 50px 100px;
@@ -90,6 +124,16 @@ const Courses = () => {
   const [nonUserCourses, setNonUserCourses] = useState([]);
   const { user } = useUser();
   const navigate = useNavigate();
+  const [language, setLanguage] = useState('English');
+
+  // Filter courses based on selected language
+  const filteredNonUserCourses = nonUserCourses.filter(
+    (course) => course.language === language
+  );
+
+  const filteredUserCourses = userCourses.filter(
+    (course) => course.language === language
+  );
 
   useEffect(() => {
     // Fetch data from the backend
@@ -144,31 +188,56 @@ const Courses = () => {
             </button>
           )}
         </div>
+        <div className='language-container'>
+          <h3>SELECT LANGUAGE</h3>
+          <div className='language-button-container'>
+            <button
+              className={
+                language === 'English'
+                  ? 'language-button-green'
+                  : 'language-button-white'
+              }
+              onClick={() => setLanguage('English')}
+            >
+              English
+            </button>
+            <button
+              className={
+                language === 'Spanish'
+                  ? 'language-button-green'
+                  : 'language-button-white'
+              }
+              onClick={() => setLanguage('Spanish')}
+            >
+              Español
+            </button>
+          </div>
+        </div>
         <div className='courses-container'>
-          {nonUserCourses &&
-            nonUserCourses.map((classData, index) => (
-              <CourseCard
-                key={index}
-                course_id={classData.id}
-                course_title={classData.title}
-                course_duration={'5 hours'}
-                course_price={classData.price}
-                course_description={classData.description}
-                course_image={classData.cover_image_link}
-              />
-            ))}
-          {userCourses &&
-            userCourses.map((classData, index) => (
-              <CourseCard
-                key={index}
-                course_id={classData.id}
-                course_title={classData.title}
-                course_duration={'5 hours'}
-                course_price={classData.price}
-                course_description={classData.description}
-                course_image={classData.cover_image_link}
-              />
-            ))}
+          {filteredNonUserCourses.map((classData, index) => (
+            <CourseCard
+              key={index}
+              course_id={classData.id}
+              course_title={classData.title}
+              course_type={classData.course_type}
+              course_price={classData.price}
+              course_description={classData.description}
+              course_image={classData.cover_image_link}
+              courseOwner={false}
+            />
+          ))}
+          {filteredUserCourses.map((classData, index) => (
+            <CourseCard
+              key={index}
+              course_id={classData.id}
+              course_title={classData.title}
+              course_type={classData.course_type}
+              course_price={classData.price}
+              course_description={classData.description}
+              course_image={classData.cover_image_link}
+              courseOwner={true}
+            />
+          ))}
         </div>
       </CoursesStyling>
       <Footer />

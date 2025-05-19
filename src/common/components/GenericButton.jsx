@@ -30,6 +30,11 @@ const StyledButton = styled.button`
     filter: ${(props) =>
       props.isHovered ? 'brightness(1.2)' : 'brightness(1)'};
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: calc(${(props) => props.fontSize} * 0.8);
+    padding: calc(${(props) => props.padding} * 0.8);
+    gap: 6px;
 `;
 
 const GenericButton = ({

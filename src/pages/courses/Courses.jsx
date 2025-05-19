@@ -95,6 +95,19 @@ const CoursesStyling = styled.div`
     align-self: stretch;
   }
 
+  .filters-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 48px 120px;
+    align-items: flex-start;
+  }
+
+  .filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .language-button-container {
     display: flex;
     gap: 8px;
@@ -116,6 +129,17 @@ const CoursesStyling = styled.div`
     .courses-container {
       justify-content: center;
     }
+
+    .filters-row {
+      flex-direction: column;
+      padding: 24px;
+      gap: 24px;
+    }
+
+    .filter-container {
+      width: 100%;
+      align-items: center;
+    }
   }
 `;
 
@@ -125,14 +149,19 @@ const Courses = () => {
   const { user } = useUser();
   const navigate = useNavigate();
   const [language, setLanguage] = useState('English');
+  const [courseType, setCourseType] = useState('All'); // Add this line
 
   // Filter courses based on selected language
   const filteredNonUserCourses = nonUserCourses.filter(
-    (course) => course.language === language
+    (course) =>
+      course.language === language &&
+      (courseType === 'All' || course.course_type === courseType)
   );
 
   const filteredUserCourses = userCourses.filter(
-    (course) => course.language === language
+    (course) =>
+      course.language === language &&
+      (courseType === 'All' || course.course_type === courseType)
   );
 
   useEffect(() => {
@@ -159,8 +188,12 @@ const Courses = () => {
       }
     };
 
-    fetchData();
-  }, []);
+    if (!user) {
+      navigate('/login');
+    } else {
+      fetchData();
+    }
+  }, [user, navigate]);
 
   return (
     <div>
@@ -188,31 +221,81 @@ const Courses = () => {
             </button>
           )}
         </div>
-        <div className='language-container'>
-          <h3>SELECT LANGUAGE</h3>
-          <div className='language-button-container'>
-            <button
-              className={
-                language === 'English'
-                  ? 'language-button-green'
-                  : 'language-button-white'
-              }
-              onClick={() => setLanguage('English')}
-            >
-              English
-            </button>
-            <button
-              className={
-                language === 'Spanish'
-                  ? 'language-button-green'
-                  : 'language-button-white'
-              }
-              onClick={() => setLanguage('Spanish')}
-            >
-              Español
-            </button>
+
+        <div className='filters-row'>
+          <div className='filter-container'>
+            <h3>SELECT COURSE TYPE</h3>
+            <div className='language-button-container'>
+              <button
+                className={
+                  courseType === 'All'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setCourseType('All')}
+              >
+                All
+              </button>
+              <button
+                className={
+                  courseType === 'Online'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setCourseType('Online')}
+              >
+                Online
+              </button>
+              <button
+                className={
+                  courseType === 'In-Person'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setCourseType('In-Person')}
+              >
+                In-Person
+              </button>
+              <button
+                className={
+                  courseType === 'Virtual'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setCourseType('Virtual')}
+              >
+                Virtual
+              </button>
+            </div>
+          </div>
+
+          <div className='filter-container'>
+            <h3>SELECT LANGUAGE</h3>
+            <div className='language-button-container'>
+              <button
+                className={
+                  language === 'English'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setLanguage('English')}
+              >
+                English
+              </button>
+              <button
+                className={
+                  language === 'Spanish'
+                    ? 'language-button-green'
+                    : 'language-button-white'
+                }
+                onClick={() => setLanguage('Spanish')}
+              >
+                Español
+              </button>
+            </div>
           </div>
         </div>
+
         <div className='courses-container'>
           {filteredNonUserCourses.map((classData, index) => (
             <CourseCard

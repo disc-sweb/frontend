@@ -22,11 +22,19 @@ const CoursesStyling = styled.div`
     text-align: center;
     color: #007575;
     margin-bottom: 20px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 24px;
+    }
   }
 
   h3 {
     font-size: 20px;
     margin: 0;
+
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+    }
   }
 
   .header-container {
@@ -34,6 +42,10 @@ const CoursesStyling = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
+
+    @media screen and (max-width: 768px) {
+      margin-bottom: 24px;
+    }
   }
 
   .add-course-button {
@@ -48,7 +60,8 @@ const CoursesStyling = styled.div`
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 800px;
+    max-width: 800px;
+    width: 100%;
     color: #007575;
   }
 
@@ -68,6 +81,11 @@ const CoursesStyling = styled.div`
     background: #007f80;
     color: #ffffff;
     font-size: 16px;
+
+    @media screen and (max-width: 768px) {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
   }
 
   .language-button-white {
@@ -76,6 +94,11 @@ const CoursesStyling = styled.div`
     background: #ffffff;
     color: #007f80;
     font-size: 16px;
+
+    @media screen and (max-width: 768px) {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
   }
 
   .courses-container {
@@ -96,9 +119,10 @@ const CoursesStyling = styled.div`
 
   .filters-row {
     display: flex;
+    gap: 48px;
     justify-content: space-between;
-    padding: 48px 120px;
-    align-items: flex-start;
+    padding: 48px 0;
+    flex-wrap: wrap;
   }
 
   .filter-container {

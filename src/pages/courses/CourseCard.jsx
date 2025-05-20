@@ -37,6 +37,9 @@ const StyledComponent = styled.div`
     padding: 24px; /* Increased from 20px */
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 768px) {
+      padding: 16px;
   }
 
   .card-title {
@@ -44,6 +47,10 @@ const StyledComponent = styled.div`
     font-weight: 600;
     margin-bottom: 8px; /* Increased from 5px */
     color: #333;
+
+    @media screen and (max-width: 768px) {
+      font-size: 16px;
+    }
   }
 
   .card-price {
@@ -54,6 +61,11 @@ const StyledComponent = styled.div`
     &::before {
       content: '$';
     }
+
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
   }
 
   .card-description {
@@ -61,6 +73,11 @@ const StyledComponent = styled.div`
     line-height: 1.6; /* Increased from 1.5 */
     color: #555;
     margin-bottom: 24px; /* Increased from 20px */
+
+    @media screen and (max-width: 768px) {
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
   }
 
   .card-button {
@@ -75,6 +92,11 @@ const StyledComponent = styled.div`
     transition: background-color 0.3s;
     margin-top: auto;
     width: 60%; /* Added width to make button more prominent */
+
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
   }
 
   .card-button:hover {
@@ -86,6 +108,10 @@ const StyledComponent = styled.div`
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.2rem;
+    }
   }
 
   .admin-controls button.edit svg {
@@ -104,6 +130,12 @@ const StyledComponent = styled.div`
     border-radius: 12px;
     display: inline-block;
     margin-bottom: 12px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 12px;
+      padding: 4px 8px;
+      margin-bottom: 8px;
+    }
   }
 `;
 

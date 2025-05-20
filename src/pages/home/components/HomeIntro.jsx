@@ -1,22 +1,8 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import GenericButton from 'common/components/GenericButton';
 
 import './HomeIntro.css';
-
-const GreyText = styled.p`
-  color: #474747;
-`;
-
-const ButtonDiv = styled.div`
-  padding: 48px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 48px 72px;
-`;
 
 const TealButton = {
   bgColor: '#007F80',
@@ -29,14 +15,14 @@ const TealButton = {
 export default function HomeIntro() {
   return (
     <div className='homeintro'>
-      <GreyText>
+      <p className='greytext'>
         Ready to embark on a transformative journey of learning and growth?
-      </GreyText>
-      <GreyText>
+      </p>
+      <p className='greytext'>
         Explore our classes below and take the first step towards becoming a
         certified doula with the Sokana Collective Doula Training Academy.
-      </GreyText>
-      <ButtonDiv>
+      </p>
+      <div className='buttondiv'>
         <GenericButton
           {...TealButton}
           text='FULL SPECTRUM DOULA CERTIFICATION'
@@ -47,7 +33,7 @@ export default function HomeIntro() {
           text='LABOR SUPPORT CERTIFICATION FOR POSTPARTUM DOULAS'
         />
         <GenericButton {...TealButton} text='ALL COURSES' />
-      </ButtonDiv>
+      </div>
     </div>
   );
 }

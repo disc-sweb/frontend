@@ -1,7 +1,5 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 import GenericButton from 'common/components/GenericButton';
 import homepagedoula from 'pages/home/images/homepagedoula.png';
 
@@ -14,13 +12,6 @@ const TealButton = {
   fontSize: '16px',
   hoverBgColor: '#005F60',
 };
-
-const ButtonDiv = styled.div`
-  padding: 72px 0;
-  display: flex;
-  gap: 72px;
-  justify-content: center;
-`;
 
 export default function HomeDoulaProgram() {
   return (
@@ -41,10 +32,10 @@ export default function HomeDoulaProgram() {
           />
         </div>
       </div>
-      <ButtonDiv>
+      <div className='buttondiv'>
         <GenericButton {...TealButton} text='LEARN MORE' />
         <GenericButton {...TealButton} text='REQUIRED TRAININGS' />
-      </ButtonDiv>
+      </div>
     </div>
   );
 }

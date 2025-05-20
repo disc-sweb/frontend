@@ -15,22 +15,22 @@ const SectionComponent = ({
   titleColor,
   body,
 }) => {
-  // Normalize any smart apostrophes to standard ones
-  // const normalizedDescript = sectionDescript.replace(/['']/g, "'");
-
   return (
     <div className='page-section-cont' style={{ backgroundColor }}>
       <div
         className='page-section'
         style={{
-          gap: `${sectionGap}pt`,
+          '--section-gap': `${sectionGap}pt`,
           paddingBottom: `${sectionPaddingBot}pt`,
         }}
       >
         <div className='section-header'>
           <div
             className='section-title'
-            style={{ color: titleColor, fontSize: `${titleSize}px` }}
+            style={{
+              color: titleColor,
+              '--section-title-fontSize': `${titleSize}px`,
+            }}
           >
             {sectionTitle}
           </div>

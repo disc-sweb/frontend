@@ -7,12 +7,6 @@ import { SectionComponent } from 'common/components/section/SectionComponent';
 import HomeDoulaProgram from 'pages/home/components/HomeDoulaProgram';
 import HomeIntro from 'pages/home/components/HomeIntro';
 
-// const TextContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   gap: 20px;
-// `;
-
 const HomePage = styled.div`
   flex: 1 0 0;
   flex-direction: column;
@@ -22,8 +16,6 @@ const HomePage = styled.div`
 `;
 
 export default function Home() {
-  // const { user } = useContext(UserContext);
-
   return (
     <HomePage>
       <SectionComponent
@@ -48,7 +40,7 @@ export default function Home() {
           "SIU School of Medicine's Office of Certification Strategies administers the Illinois Medicaid-Certified Doula Program with oversight guidance by the Illinois Department of Healthcare and Family Services.",
         ]}
         sectionAlign={'center'}
-        sectionGap={0}
+        sectionGap={72}
         sectionPaddingBot={128}
         moreButton={true}
         titleColor={'black'}

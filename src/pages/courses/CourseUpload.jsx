@@ -63,9 +63,17 @@ export default function CourseUpload() {
     try {
       console.log('Submitting form...', formState);
       const formData = new FormData();
+
       Object.entries(formState).forEach(([key, value]) => {
         formData.append(key, value);
       });
+
+      // Clean up the price field
+      if (formData.has('price')) {
+        const price = formData.get('price');
+        formData.delete('price');
+        formData.append('price', price.replace('$', ''));
+      }
 
       const BACKEND_URL =
         process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
@@ -150,10 +158,36 @@ export default function CourseUpload() {
           <Input.Text
             title='PRICE'
             name='price'
-            placeholder='Enter course price'
-            value={formState.price}
-            onChange={handleChange}
+            placeholder='$0.00'
+            value={formState.price ? formState.price : ''}
+            onChange={(e) => {
+              let value = e.target.value;
+              // Remove dollar sign if present
+              if (value.startsWith('$')) {
+                value = value.slice(1);
+              }
+
+              // Allow only numbers and one decimal point
+              if (value === '' || value === '.') {
+                setFormState((prev) => ({
+                  ...prev,
+                  price: value === '.' ? '$0.' : '',
+                }));
+                return;
+              }
+
+              // Check if input is a valid price format
+              if (/^\d*\.?\d{0,2}$/.test(value)) {
+                setFormState((prev) => ({
+                  ...prev,
+                  price: `$${value}`,
+                }));
+              }
+            }}
             required
+            style={{
+              position: 'relative',
+            }}
           />
           {formState.courseType === 'Online' && (
             <Input.Video

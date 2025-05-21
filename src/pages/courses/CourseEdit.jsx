@@ -20,7 +20,7 @@ export default function CourseUpload() {
     title: '',
     price: '',
     description: '',
-    formLink: '',
+    form_link: '',
     courseType: '',
     language: '', // Add this field
   });
@@ -31,8 +31,35 @@ export default function CourseUpload() {
 
   // Update handleChange function to handle video visibility
   const handleChange = (e) => {
+    console.log('Current form state:', formState);
     const { name, value } = e.target;
-    const updatedFormState = { ...formState, [name]: value };
+    let updatedValue = value;
+
+    if (name === 'price') {
+      // Remove dollar sign if present for validation
+      if (value.startsWith('$')) {
+        updatedValue = value.slice(1);
+      }
+
+      // Allow only numbers and one decimal point
+      if (updatedValue === '' || updatedValue === '.') {
+        updatedValue = updatedValue === '.' ? '$0.' : '$';
+      }
+
+      // Check if input is a valid price format
+      if (/^\d*\.?\d{0,2}$/.test(updatedValue)) {
+        updatedValue = `$${updatedValue}`;
+      } else {
+        updatedValue = parseFloat(updatedValue).toFixed(2);
+        if (isNaN(updatedValue)) {
+          updatedValue = '';
+        } else {
+          updatedValue = `$${updatedValue}`;
+        }
+      }
+    }
+    console.log('Updated value:', updatedValue);
+    const updatedFormState = { ...formState, [name]: updatedValue };
 
     // Clear video file if changing from Online to other course types
     if (name === 'courseType' && value !== 'Online') {
@@ -40,13 +67,29 @@ export default function CourseUpload() {
     }
 
     console.log('Updated form state:', updatedFormState);
-    setFormState(updatedFormState);
-    setError('');
+
+    // Debug validation for each field
+    Object.entries(updatedFormState).forEach(([key, value]) => {
+      let isValid = false;
+      if (key === 'videoFile') {
+        isValid =
+          updatedFormState.courseType !== 'Online' ||
+          value instanceof File ||
+          (typeof value === 'string' && value.trim() !== '');
+      } else {
+        isValid =
+          value instanceof File ||
+          (typeof value === 'string' && value.trim() !== '');
+      }
+      console.log(
+        `Field ${key}: ${isValid ? 'Valid' : 'Invalid'} - Value:`,
+        value
+      );
+    });
 
     const isComplete = Object.entries(updatedFormState).every(
       ([key, value]) => {
         if (key === 'videoFile') {
-          // Only validate video for Online courses
           return (
             updatedFormState.courseType !== 'Online' ||
             value instanceof File ||
@@ -60,17 +103,25 @@ export default function CourseUpload() {
       }
     );
 
+    setFormState(updatedFormState);
+    setError('');
     setIsFormComplete(isComplete);
+    console.log('Form complete:', isComplete);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      console.log('Submitting form...', formState);
       const formData = new FormData();
+
       Object.entries(formState).forEach(([key, value]) => {
-        formData.append(key, value);
+        if (key === 'price') {
+          // Remove dollar sign and convert to number
+          formData.append(key, value.replace('$', ''));
+        } else {
+          formData.append(key, value);
+        }
       });
 
       const BACKEND_URL =
@@ -119,15 +170,24 @@ export default function CourseUpload() {
           throw new Error('Course not found');
         }
         const data = await response.json();
-        console.log('response: ', data);
-        setFormState({
-          title: data.title,
-          price: data.price.toString(),
-          description: data.description,
-          formLink: data.form_link,
-          courseType: data.course_type,
-          language: data.language, // Add this field
-        });
+        console.log('Raw response:', data);
+
+        const courseData = data;
+        delete courseData.owner;
+        courseData.price = `$${courseData.price}`;
+
+        console.log('Processed course data:', courseData);
+
+        const newState = {
+          title: courseData.title,
+          price: courseData.price,
+          description: courseData.description,
+          form_link: courseData.form_link,
+          courseType: courseData.course_type,
+          language: courseData.language,
+        };
+
+        setFormState(newState);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -193,10 +253,13 @@ export default function CourseUpload() {
           <Input.Text
             title='PRICE'
             name='price'
-            placeholder='Enter course price'
-            value={formState.price}
+            placeholder='$0.00'
+            value={formState.price || '$'}
             onChange={handleChange}
             required
+            style={{
+              position: 'relative',
+            }}
           />
           {formState.courseType === 'Online' && (
             <Input.Video
@@ -210,7 +273,7 @@ export default function CourseUpload() {
             title='GOOGLE FORM LINK'
             name='formLink'
             placeholder='Enter the link to Google Form for course registration'
-            value={formState.formLink}
+            value={formState.form_link}
             onChange={handleChange}
             required
           />

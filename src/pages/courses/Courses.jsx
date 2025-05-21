@@ -90,7 +90,6 @@ const CoursesStyling = styled.div`
     padding: 48px 120px;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
     gap: 12px;
     align-self: stretch;
   }
@@ -113,7 +112,7 @@ const CoursesStyling = styled.div`
     gap: 8px;
   }
 
-  padding: 50px 100px 50px 100px;
+  padding: 50px 100px 256px 100px;
   min-height: 100vh;
   height: auto;
   background-color: #fbe9fd;

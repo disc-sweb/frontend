@@ -282,7 +282,7 @@ export default function CourseUpload() {
             onClick={handleSubmit}
             isLoading={isSubmitting}
           >
-            {isSubmitting ? 'Uploading' : 'Submit'}
+            {isSubmitting ? 'Uploading' : 'Save Changes'}
           </SubmitButton>
           <SubmitButton
             onClick={() => navigate('/courses')}

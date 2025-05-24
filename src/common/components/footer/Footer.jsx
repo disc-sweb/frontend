@@ -156,7 +156,7 @@ export default function Footer() {
           <SmallButton
             onClick={() =>
               window.open(
-                'https://linkedin.com/company/sokanacollective',
+                'http://www.linkedin.com/in/sokana-collective',
                 '_blank'
               )
             }

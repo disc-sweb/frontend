@@ -37,6 +37,8 @@ const StyledComponent = styled.div`
     padding: 24px; /* Increased from 20px */
     display: flex;
     flex-direction: column;
+    flex: 1;
+    height: 100%;
   }
 
   .card-title {

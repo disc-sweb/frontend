@@ -187,8 +187,9 @@ export default function NavBar() {
           </AnimatedLink>
           {user ? (
             <AnimatedLink
+              className={isModalOpen ? 'active' : ''}
               onClick={() => {
-                setIsModalOpen(true);
+                handleLogoutClick();
                 setIsMenuOpen(false);
               }}
             >

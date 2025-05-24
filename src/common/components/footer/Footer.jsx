@@ -96,6 +96,14 @@ const whiteButton = {
 };
 
 export default function Footer() {
+  const handleConnect = () => {
+    window.open('https://calendly.com/sokanacollective/lets-connect', '_blank');
+  };
+
+  const handleRequest = () => {
+    window.open('https://app.edoula.biz/private/form/df49ef9a', '_blank');
+  };
+
   return (
     <FooterContainer>
       <VerticallyAligned style={{ '--footer-width': '360px' }}>
@@ -115,19 +123,44 @@ export default function Footer() {
         <Img src='https://images.squarespace-cdn.com/content/v1/623f9fd83fd2075fe4f672b0/bed05e10-b16d-47ed-8c82-8ab961b9701c/BCBS+Logo.png' />
       </VerticallyAligned>
       <VerticallyAligned style={{ '--footer-width': '250px' }}>
-        <GenericButton {...whiteButton} text="LET'S CONNECT" />
-        <GenericButton {...whiteButton} text='REQUEST SERVICES' />
+        <GenericButton
+          {...whiteButton}
+          text="LET'S CONNECT"
+          onClick={handleConnect}
+        />
+        <GenericButton
+          {...whiteButton}
+          text='REQUEST SERVICES'
+          onClick={handleRequest}
+        />
         <HorizontallyAligned gap='16px'>
-          <SmallButton>
+          <SmallButton
+            onClick={() =>
+              window.open('https://facebook.com/sokanacollective', '_blank')
+            }
+          >
             <FaFacebookF />
           </SmallButton>
-          <SmallButton>
+          <SmallButton
+            onClick={() =>
+              window.open('https://instagram.com/sokanacollective', '_blank')
+            }
+          >
             <FaInstagram />
           </SmallButton>
-          <SmallButton>
+          <SmallButton
+            onClick={() => window.open('mailto:info@sokanacollective.org')}
+          >
             <FaRegEnvelope />
           </SmallButton>
-          <SmallButton>
+          <SmallButton
+            onClick={() =>
+              window.open(
+                'https://linkedin.com/company/sokanacollective',
+                '_blank'
+              )
+            }
+          >
             <FaLinkedinIn />
           </SmallButton>
         </HorizontallyAligned>
@@ -139,11 +172,22 @@ export default function Footer() {
           Sokana Collective is a 501c3 non profit organization EIN: 93-4646850
         </Text>
       </VerticallyAligned>
-      <Img
-        dimension='180px'
-        src='https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/15248996/svg'
-        alt='logo'
-      />
+      <div style={{ marginTop: '60px' }}>
+        <SmallButton
+          onClick={() =>
+            window.open('https://app.candid.org/profile/15248996', '_blank')
+          }
+        >
+          <Img
+            dimension='180px'
+            src='https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/15248996/svg'
+            alt='logo'
+            onClick={() =>
+              window.open('https://app.candid.org/profile/15248996', '_blank')
+            }
+          />
+        </SmallButton>
+      </div>
     </FooterContainer>
   );
 }

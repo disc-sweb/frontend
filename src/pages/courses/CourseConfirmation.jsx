@@ -104,12 +104,12 @@ export default function CourseConfirmation() {
         <ButtonDiv>
           <GenericButton
             {...TealButton}
-            text='CONTINUE WATCHING COURSE'
+            text='CONTINUE TO COURSE'
             onClick={() => navigate(`/courses/${course?.id}`)}
           />
           <GenericButton
             {...TealButton}
-            text='BROWSE MORE EVENTS/COURSES'
+            text='BROWSE MORE COURSES'
             onClick={() => navigate('/courses')}
           />
           <GenericButton

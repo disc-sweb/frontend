@@ -217,6 +217,7 @@ const CourseDetail = () => {
         }
         const data = await response.json();
         console.log('response: ', data);
+        console.log('Owner: ', data.owner);
         setIsRegistered(data.video_link);
         setCourseData(data);
       } catch (error) {
@@ -300,7 +301,7 @@ const CourseDetail = () => {
             </Description>
 
             {/* Check if the user is registered for the course to show the Register Button */}
-            {!courseData.video_link && (
+            {!courseData.owner && (
               <RegisterButton onClick={handleRegister}>
                 Register for this course
               </RegisterButton>

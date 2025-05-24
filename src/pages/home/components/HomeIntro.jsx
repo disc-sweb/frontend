@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import GenericButton from 'common/components/GenericButton';
 
 import './HomeIntro.css';
@@ -13,6 +15,19 @@ const TealButton = {
 };
 
 export default function HomeIntro() {
+  const navigate = useNavigate();
+
+  const handleCertification = () => {
+    window.open(
+      'https://www.sokanacollective.com/what-you-will-lean',
+      '_blank'
+    );
+  };
+
+  const handleAllCourses = () => {
+    navigate('/courses');
+  };
+
   return (
     <div className='homeintro'>
       <p className='greytext'>
@@ -26,13 +41,13 @@ export default function HomeIntro() {
         <GenericButton
           {...TealButton}
           text='FULL SPECTRUM DOULA CERTIFICATION'
+          onClick={handleCertification}
         />
-        <GenericButton {...TealButton} text='CREATE AN ACCOUNT' />
         <GenericButton
           {...TealButton}
-          text='LABOR SUPPORT CERTIFICATION FOR POSTPARTUM DOULAS'
+          text='ALL COURSES'
+          onClick={handleAllCourses}
         />
-        <GenericButton {...TealButton} text='ALL COURSES' />
       </div>
     </div>
   );

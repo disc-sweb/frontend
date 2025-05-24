@@ -12,10 +12,8 @@
 
 .buttondiv {
   padding-top: 72px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 48px 72px;
+  display: flex;
+  gap: 72px;
 
   @media screen and (max-width: 768px) {
     padding-top: 32px;

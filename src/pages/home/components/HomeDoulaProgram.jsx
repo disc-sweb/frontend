@@ -14,6 +14,17 @@ const TealButton = {
 };
 
 export default function HomeDoulaProgram() {
+  const handleLearnMore = () => {
+    window.open(
+      'https://www.siumed.edu/fcm/illinois-medicaid-certified-doula-program',
+      '_blank'
+    );
+  };
+
+  const handleRequiredTrainings = () => {
+    window.open('https://sokanacollective.as.me/schedule/2268a87e', '_blank');
+  };
+
   return (
     <div>
       <div className='text-container'>
@@ -33,8 +44,16 @@ export default function HomeDoulaProgram() {
         </div>
       </div>
       <div className='buttondiv'>
-        <GenericButton {...TealButton} text='LEARN MORE' />
-        <GenericButton {...TealButton} text='REQUIRED TRAININGS' />
+        <GenericButton
+          {...TealButton}
+          text='LEARN MORE'
+          onClick={handleLearnMore}
+        />
+        <GenericButton
+          {...TealButton}
+          text='REQUIRED TRAININGS'
+          onClick={handleRequiredTrainings}
+        />
       </div>
     </div>
   );

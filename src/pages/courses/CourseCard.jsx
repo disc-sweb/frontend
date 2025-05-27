@@ -158,7 +158,7 @@ const CourseCard = ({
       // Optionally trigger a re-fetch or remove the course from UI state
     } catch (err) {
       console.error('Error deleting course:', err);
-      alert('An unexpected error occurred while deleting the course.');
+      // alert('An unexpected error occurred while deleting the course.');
     }
   };
 

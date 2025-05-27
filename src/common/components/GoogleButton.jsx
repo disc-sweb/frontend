@@ -54,6 +54,10 @@ const Divider = styled.div`
     padding: 0 12px;
     color: #666;
     font-size: 14px;
+
+    @media screen and (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 `;
 

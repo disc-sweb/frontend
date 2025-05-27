@@ -15,6 +15,11 @@ export const StyledForm = styled.div`
   margin-top: 50px;
   background-color: #ffffff;
   font-family: 'PoppinsLight';
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    margin: 0;
+    height: 100%;
 `;
 
 export const StyledInput = styled.input`
@@ -47,6 +52,10 @@ export const StyledPage = styled.div`
   font-family: 'PoppinsLight';
   padding-top: 25px;
   padding-bottom: 100px;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 export const StyledButton = styled(Button.Primary)`
@@ -70,6 +79,11 @@ export const StyledLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
 `;
 
 export const StyledLinkCenter = styled(Link)`
@@ -83,5 +97,10 @@ export const StyledLinkCenter = styled(Link)`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
   }
 `;

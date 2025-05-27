@@ -10,6 +10,11 @@ export const InputName = styled.h3`
   font-weight: normal;
   font-size: 1rem;
   margin-bottom: 4px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+  }
 `;
 export const InputTitle = styled.span`
   margin-right: 2px;
@@ -35,6 +40,11 @@ export const StyledInput = styled.input`
 
   &::placeholder {
     color: #aaa;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 4px 0;
   }
 `;
 
@@ -85,6 +95,11 @@ export const IconContainer = styled.div`
   top: 8px;
   background-color: var(--white);
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    top: 0;
+    height: 80%;
+  }
 `;
 
 export const StyledButton = styled(Button.Primary)`
@@ -107,6 +122,15 @@ export const StyledButton = styled(Button.Primary)`
     justify-content: center;
     gap: 8px;
     min-height: 40px; // Add this to prevent button size changes
+
+    @media screen and (max-width: 768px) {
+      min-height: 30px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-top: 10px;
   }
 `;
 

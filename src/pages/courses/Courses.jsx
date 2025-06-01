@@ -186,8 +186,10 @@ const Courses = () => {
         console.error('Error fetching data:', error);
       }
     };
-
-    if (!user) {
+    if (user === undefined) {
+      return;
+    }
+    if (user === null) {
       navigate('/login');
     } else {
       fetchData();

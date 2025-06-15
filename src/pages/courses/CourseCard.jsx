@@ -153,7 +153,7 @@ const CourseCard = ({
         console.error('Failed to delete course:', data.error || data.message);
         return;
       }
-      navigate('/courses');
+      window.location.reload();
       // Optionally trigger a re-fetch or remove the course from UI state
     } catch (err) {
       console.error('Error deleting course:', err);
